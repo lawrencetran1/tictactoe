@@ -2,7 +2,17 @@
 
 // Declare global variables
 var squares = document.getElementsByClassName('square');
-var history = [[],[],[]];
+var board = {
+	topLeft: "",
+	topMiddle: "",
+	topRight: "",
+	middleLeft: "",
+	center: "",
+	middleRight: "",
+	bottomLeft: "",
+	bottomMiddle: "",
+	bottomRight: ""
+}
 
 // Player 1 = 'O' and Player 2 = 'X'
 var tictactoe = {
@@ -25,15 +35,15 @@ function click() {
 		tictactoe.player1 = false;
 		tictactoe.player2 = true;
 
-		if (this.id == 1) {history[0].unshift('O')}
-		else if (this.id == 2) {history[0].splice(1, 0, 'O')}
-		else if (this.id == 3) {history[0].push('O')}
-		else if (this.id == 4) {history[1].unshift('O')}
-		else if (this.id == 5) {history[1].splice(1, 0, 'O')}
-		else if (this.id == 6) {history[1].push('O')}
-		else if (this.id == 7) {history[2].unshift('O')}
-		else if (this.id == 8) {history[2].splice(1, 0, 'O')}
-		else if (this.id == 9) {history[2].push('O')}
+			 if (this.id == 1) {board.topLeft = 'O'}
+		else if (this.id == 2) {board.topMiddle = 'O'}
+		else if (this.id == 3) {board.topRight = 'O'}
+		else if (this.id == 4) {board.middleLeft = 'O'}
+		else if (this.id == 5) {board.center = 'O'}
+		else if (this.id == 6) {board.middleRight = 'O'}
+		else if (this.id == 7) {board.bottomLeft = 'O'}
+		else if (this.id == 8) {board.bottomMiddle = 'O'}
+		else if (this.id == 9) {board.bottomRight = 'O'}
 	
 	}
 
@@ -43,24 +53,22 @@ function click() {
 		tictactoe.player2 = false;
 		tictactoe.player1 = true;
 
-		if (this.id == 1) {history[0].unshift('X')}
-		else if (this.id == 2) {history[0].splice(1, 0, 'X')}
-		else if (this.id == 3) {history[0].push('X')}
-		else if (this.id == 4) {history[1].unshift('X')}
-		else if (this.id == 5) {history[1].splice(1, 0, 'X')}
-		else if (this.id == 6) {history[1].push('X')}
-		else if (this.id == 7) {history[2].unshift('X')}
-		else if (this.id == 8) {history[2].splice(1, 0, 'X')}
-		else if (this.id == 9) {history[2].push('X')}
+			 if (this.id == 1) {board.topLeft = 'X'}
+		else if (this.id == 2) {board.topMiddle = 'X'}
+		else if (this.id == 3) {board.topRight = 'X'}
+		else if (this.id == 4) {board.middleLeft = 'X'}
+		else if (this.id == 5) {board.center = 'X'}
+		else if (this.id == 6) {board.middleRight = 'X'}
+		else if (this.id == 7) {board.bottomLeft = 'X'}
+		else if (this.id == 8) {board.bottomMiddle = 'X'}
+		else if (this.id == 9) {board.bottomRight = 'X'}
 	}
-	check(history);
+	check();
 };
 
 // Create check score function which is called when click() is called
-function check(history) {
-	history.forEach(function(row) {
-		console.log(row);
-	})
+function check() {
+	console.log(board)
 }
 
 // Add add event lisenter to each square
