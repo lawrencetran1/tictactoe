@@ -2,6 +2,8 @@
 
 // Declare global variables
 var squares = document.getElementsByClassName('square');
+var p1score = document.getElementById('p1');
+var p2score = document.getElementById('p2');
 var tracker = [["","",""],["","",""],["","",""]];
 var winner = null;
 
@@ -21,7 +23,6 @@ function click() {
 
 	if (tictactoe.player1) {
 		this.appendChild(document.createTextNode('O'));
-		// this.value = 'O';
 		tictactoe.player1 = false;
 		tictactoe.player2 = true;
 
@@ -39,7 +40,6 @@ function click() {
 
 	else if (tictactoe.player2) {
 		this.appendChild(document.createTextNode('X'));
-		// this.value = 'X';
 		tictactoe.player2 = false;
 		tictactoe.player1 = true;
 
@@ -55,7 +55,6 @@ function click() {
 	}
 	grid();
 	getWinner();
-
 };
 
 // Create function that shows current state of the grid when click() is called
@@ -92,10 +91,16 @@ function grid() {
 function getWinner() {
 
 	if (winner) {
+
 		console.log('winner is ' + winner);
 
 			 if (winner === 'O') {tictactoe.p1score++}
 		else if (winner === 'X') {tictactoe.p2score++}
+
+		// Display score in HTML
+		console.log(tictactoe.p1score, tictactoe.p2score);
+		p1score.innerHTML = tictactoe.p1score;
+		p2score.innerHTML = tictactoe.p2score;
 
 		// reset innerHTML of each square to empty string
 		for (var i = 0; i < squares.length; i++) {
@@ -114,12 +119,8 @@ for (var i = 0; i < squares.length; i++) {
 	squares[i].addEventListener('click', click)
 };
 
-// Display score in HTML
-var p1score = document.getElementById('p1');
-var p2score = document.getElementById('p2');
 
-p1score.innerHTML += tictactoe.p1score;
-p2score.innerHTML += tictactoe.p2score;
+
 
 
 })();
