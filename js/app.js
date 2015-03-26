@@ -103,7 +103,7 @@ function getWinner() {
 
 	if (winner) {
 
-		console.log('winner is ' + winner);
+		alert('winner is ' + winner);
 
 			 if (winner === 'O') {tictactoe.p1score++}
 		else if (winner === 'X') {tictactoe.p2score++}

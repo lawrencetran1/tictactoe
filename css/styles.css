@@ -1,18 +1,88 @@
+/*General styles
+=====================================*/
+body {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 300;
+	background-image: url(../images/background.png)
+}
+
+@font-face {
+    font-family: brushFont;
+    src: url(../fonts/font.ttf);
+}
+
+
+/*Header styles
+====================================*/
+
+header {
+	color: black;
+	text-align: center;
+	width: 75%;
+	margin: 25px auto;
+	font-family: brushFont;
+}
+
+h1 {
+	font-family: brushFont;
+	font-weight: normal;
+	font-size: 80px;
+	color: black;
+	text-align: center;
+	margin: 25px auto;
+}
+
+h4 {
+	font-family: brushFont;
+	font-weight: normal;
+	font-size: 40px;
+	color: black;
+	text-align: center;
+	display: block;
+	margin: 25px auto;
+}
+
+/*Main container styles
+====================================*/
+
+.main {
+  width: 1440px;
+  position: absolute;
+  text-align: center;
+  display: inline-block;
+  float: left;
+}
+
 .container {
-	width: 370px;
-	position: absolute;
+  width: 520px;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  float: left;
+}
+
+.container-score {
+  width: 455px;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  float: left;
 }
 
 .square {
+	font-family: brushFont;
 	height: 100px;
 	width: 100px;
-	padding: 5px;
-	border: 2px solid black;
+	padding: 25px;
+	border-right: 10px solid black;
+	border-bottom: 10px solid black;
 	display: inline-block;
 	position: relative;
 	vertical-align: top;
-	margin: 2px;
-	font-size: 32px;
+	font-size: 80px;
 	text-align: center;
+	color: black;
 }
+
+
 
