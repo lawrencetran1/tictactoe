@@ -12,8 +12,10 @@
 
 // Declare global variables
 var squares = document.getElementsByClassName('square');
-var p1score = document.getElementById('p1');
-var p2score = document.getElementById('p2');
+var p1score = document.getElementById('p1score');
+var p2score = document.getElementById('p2score');
+var star1 = document.getElementById('star1');
+var star2 = document.getElementById('star2');
 var grid = [[null,null,null],[null,null,null],[null,null,null]];
 var winMsg = null;
 var counter = 0;
@@ -40,6 +42,8 @@ function click() {
 
 	if (tictactoe.player1) {
 		self.appendChild(document.createTextNode('O'));
+		star1.className = 'hidden';
+		star2.className = 'star';
 
 		// Set value property to 'O' or 'X' in order to exit function, see if (self.value) return
 		self.value = 'O';
@@ -61,6 +65,10 @@ function click() {
 
 	else if (tictactoe.player2) {
 		self.appendChild(document.createTextNode('X'));
+		star2.className = 'hidden';
+		star1.className = 'star';
+
+		// Set value property to 'O' or 'X' in order to exit function, see if (self.value) return
 		self.value = 'X';
 		tictactoe.player2 = false;
 		tictactoe.player1 = true;
@@ -144,11 +152,24 @@ function getWinner() {
 
 // Create function to clear grid
 function clear() {
+		
+		// if (winMsg === 'Player 1 wins!') {
+		// 	tictactoe.player1 = false;
+		// 	tictactoe.player2 = true;
+		// }
+		// else if (winMsg === 'Player 2 wins!') {
+		// 	tictactoe.player2 = false;
+		// 	tictactoe.player1 = true;
+		// }
+		// else {
+		// 	tictactoe.player1 = true;
+		// 	tictactoe.player2 = false;
+		// }
+		winMsg = null;
 
-		// reset innerHTML of each square to empty string, reset winner, and value
+		// reset innerHTML of each square to empty string, and value
 		for (var i = 0; i < squares.length; i++) {
 			squares[i].innerHTML = "";
-			winMsg = null;
 			squares[i].value = null;
 		}
 

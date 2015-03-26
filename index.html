@@ -3,7 +3,6 @@
 <head>
 	<title>Tic Tac Toe</title>
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
-<!-- 	<link rel="stylesheet" type="text/css" href="bower_components/normalize.css"> -->
 </head>
 <body>
 
@@ -11,15 +10,16 @@
 	<h1>Tic Tac Toe</h1> 
 </header>
 
-<div class="star">
-	<img id="animated" class="animated rotateIn" src="images/star.png">
-</div>
-
 <div class="main">
 
 	<div class="container-score">
+
+		<div class="star" id="star1">
+			<img id="animated" class="animated rotateIn" src="images/star.png">
+		</div>
+
 		<span class="score"><h4>Player 1</h4></span>
-		<span class="score" id="p1">0</span>
+		<span class="score" id="p1score">0</span>
 	</div>
 
 	<div class="container">
@@ -35,8 +35,13 @@
 	</div>
 
 	<div class="container-score">
+
+		<div class="hidden" id="star2">
+			<img id="animated" class="animated rotateIn" src="images/star.png">
+		</div>
+
 		<span class="score"><h4>Player 2</h4></span>
-		<span class="score" id="p2">0</span>
+		<span class="score" id="p2score">0</span>
 	</div>
 
 </div>
