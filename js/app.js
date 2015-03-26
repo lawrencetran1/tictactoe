@@ -1,4 +1,5 @@
 // draw line through winning line
+// incorporate constructor function
 // add brush stroke to grid
 // add tally mark for scores
 // add animaation on score
@@ -77,7 +78,6 @@ function click() {
 
 	// increment counter on each click
 	counter++;
-	console.log(counter);
 
 	tracker();
 	getWinner();
@@ -86,6 +86,7 @@ function click() {
 // Create function that shows current state of the grid when click() is called
 function tracker() {
 
+	// Parse result of grid into a string
 	var topRow 	       = grid[0].join('');
 	var middleRow      = grid[1].join('');
 	var bottomRow      = grid[2].join('');
@@ -94,24 +95,21 @@ function tracker() {
 	var rightCol       = grid[0][2] + grid[1][2] + grid[2][2];
 	var diagTopLeft    = grid[0][0] + grid[1][1] + grid[2][2];
 	var diagTopRight   = grid[0][2] + grid[1][1] + grid[2][0];
+
+	// Insert each result into an array
+	var combinations = [topRow, middleRow, bottomRow, leftCol, middleCol, rightCol, diagTopLeft, diagTopRight];
+
+	// Loop through combinations to check if O or X won and set winMsg accordingly
+	for (var i = 0; i < combinations.length; i++) {
+		if (combinations[i] === 'OOO') {
+			winMsg = 'Player 1 wins!';
+		}
+		else if (combinations[i] === 'XXX') {
+			winMsg = 'Player 2 wins!';
+		}
+	};
 		
-		 if (topRow       === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (middleRow    === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (bottomRow    === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (leftCol      === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (middleCol    === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (rightCol     === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (diagTopLeft  === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (diagTopRight === 'OOO') {winMsg = 'Player 1 wins!'}
-	else if (topRow       === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (middleRow    === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (bottomRow    === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (leftCol      === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (middleCol    === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (rightCol     === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (diagTopLeft  === 'XXX') {winMsg = 'Player 2 wins!'}
-	else if (diagTopRight === 'XXX') {winMsg = 'Player 2 wins!'}
-}
+};
 
 // Create function to check winner. If there is a winner, reset the grid
 function getWinner() {

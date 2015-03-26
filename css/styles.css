@@ -70,7 +70,13 @@ h4 {
 }
 
 .score {
+	font-family: brushFont;
+	font-weight: normal;
+	font-size: 40px;
+	color: black;
+	text-align: center;
 	display: block;
+	margin: 25px auto;
 }
 
 .square {
@@ -84,6 +90,17 @@ h4 {
 	font-size: 80px;
 	text-align: center;
 	color: black;
+}
+
+.star {
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	margin-left: 50px;
+}
+
+.star img {
+	max-width: 100%;
 }
 
 /*.row {
@@ -108,44 +125,99 @@ h4 {
 #box1 {
 	border-right: 8px solid black;
 	border-bottom: 8px solid black;
+	border-radius: 15px;
 }
 
 #box2 {
 	border-right: 8px solid black;
 	border-bottom: 8px solid black;
 	margin-left: -5px;
+	border-radius: 15px;
 }
 
 #box3 {
 	border-bottom: 8px solid black;
 	margin-left: -5px;
+	border-radius: 15px;
 }
 
 #box4 {
 	border-right: 8px solid black;
 	border-bottom: 8px solid black;
+	border-radius: 15px;
 }
 
 #box5 {
 	border-right: 8px solid black;
 	border-bottom: 8px solid black;
 	margin-left: -5px;
+	border-radius: 15px;
 }
 
 #box6 {
 	border-bottom: 8px solid black;
 	margin-left: -5px;
+	border-radius: 15px;
 }
 
 #box7 {
 	border-right: 8px solid black;
+	border-radius: 15px;
 }
 
 #box8 {
 	border-right: 8px solid black;
 	margin-left: -5px;
+	border-radius: 15px;
 }
 
 #box9 {
 	margin-left: -5px;
+	border-radius: 15px;
+}
+
+#animated { 
+/*   width: 300px;
+   height: 200px;
+   border: solid 1px #1A7404;*/
+   position: absolute;
+/*   background-color: #62A80A;*/
+} 
+
+.animated { 
+   -webkit-animation-duration: 1s; 
+   animation-duration: 1s; 
+   -webkit-animation-fill-mode: both; 
+   animation-fill-mode: both; 
+   animation-iteration-count:infinite; 
+   -webkit-animation-iteration-count:infinite; 
+} 
+
+@-webkit-keyframes rotateIn { 
+    0% { 
+        -webkit-transform-origin: center center; 
+        -webkit-transform: rotate(-360deg); 
+        opacity: 1; 
+    } 
+    100% { 
+        -webkit-transform-origin: center center; 
+        -webkit-transform: rotate(0); 
+        opacity: 1; 
+    } 
+} 
+@keyframes rotateIn { 
+    0% { 
+        transform-origin: center center; 
+        transform: rotate(-3360deg); 
+        opacity: 0; 
+    } 
+    100% { 
+        transform-origin: center center; 
+        transform: rotate(0); 
+        opacity: 1; 
+    } 
+} 
+.rotateIn { 
+    -webkit-animation-name: rotateIn; 
+    animation-name: rotateIn; 
 }
