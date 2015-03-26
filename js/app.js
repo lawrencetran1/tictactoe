@@ -4,7 +4,7 @@
 var squares = document.getElementsByClassName('square');
 var p1score = document.getElementById('p1');
 var p2score = document.getElementById('p2');
-var tracker = [["","",""],["","",""],["","",""]];
+var grid = [["","",""],["","",""],["","",""]];
 var winner = null;
 
 // Player 1 = 'O' and Player 2 = 'X'
@@ -35,15 +35,16 @@ function click() {
 		tictactoe.player1 = false;
 		tictactoe.player2 = true;
 
-			 if (self.id == 1) {tracker[0][0] = 'O'}
-		else if (self.id == 2) {tracker[0][1] = 'O'}
-		else if (self.id == 3) {tracker[0][2] = 'O'}
-		else if (self.id == 4) {tracker[1][0] = 'O'}
-		else if (self.id == 5) {tracker[1][1] = 'O'}
-		else if (self.id == 6) {tracker[1][2] = 'O'}
-		else if (self.id == 7) {tracker[2][0] = 'O'}
-		else if (self.id == 8) {tracker[2][1] = 'O'}
-		else if (self.id == 9) {tracker[2][2] = 'O'}
+		// Depending on which ID# is clicked, set the corresponding grid
+			 if (self.id == 1) {grid[0][0] = 'O'}
+		else if (self.id == 2) {grid[0][1] = 'O'}
+		else if (self.id == 3) {grid[0][2] = 'O'}
+		else if (self.id == 4) {grid[1][0] = 'O'}
+		else if (self.id == 5) {grid[1][1] = 'O'}
+		else if (self.id == 6) {grid[1][2] = 'O'}
+		else if (self.id == 7) {grid[2][0] = 'O'}
+		else if (self.id == 8) {grid[2][1] = 'O'}
+		else if (self.id == 9) {grid[2][2] = 'O'}
 	
 	}
 
@@ -53,31 +54,31 @@ function click() {
 		tictactoe.player2 = false;
 		tictactoe.player1 = true;
 
-			 if (self.id == 1) {tracker[0][0] = 'X'}
-		else if (self.id == 2) {tracker[0][1] = 'X'}
-		else if (self.id == 3) {tracker[0][2] = 'X'}
-		else if (self.id == 4) {tracker[1][0] = 'X'}
-		else if (self.id == 5) {tracker[1][1] = 'X'}
-		else if (self.id == 6) {tracker[1][2] = 'X'}
-		else if (self.id == 7) {tracker[2][0] = 'X'}
-		else if (self.id == 8) {tracker[2][1] = 'X'}
-		else if (self.id == 9) {tracker[2][2] = 'X'}
+			 if (self.id == 1) {grid[0][0] = 'X'}
+		else if (self.id == 2) {grid[0][1] = 'X'}
+		else if (self.id == 3) {grid[0][2] = 'X'}
+		else if (self.id == 4) {grid[1][0] = 'X'}
+		else if (self.id == 5) {grid[1][1] = 'X'}
+		else if (self.id == 6) {grid[1][2] = 'X'}
+		else if (self.id == 7) {grid[2][0] = 'X'}
+		else if (self.id == 8) {grid[2][1] = 'X'}
+		else if (self.id == 9) {grid[2][2] = 'X'}
 	}
-	grid();
+	tracker();
 	getWinner();
 };
 
 // Create function that shows current state of the grid when click() is called
-function grid() {
+function tracker() {
 
-	var topRow 	       = tracker[0].join('');
-	var middleRow      = tracker[1].join('');
-	var bottomRow      = tracker[2].join('');
-	var leftCol        = tracker[0][0] + tracker[1][0] + tracker[2][0];
-	var middleCol      = tracker[0][1] + tracker[1][1] + tracker[2][1];
-	var rightCol       = tracker[0][2] + tracker[1][2] + tracker[2][2];
-	var diagTopLeft    = tracker[0][0] + tracker[1][1] + tracker[2][2];
-	var diagTopRight   = tracker[0][2] + tracker[1][1] + tracker[2][0];
+	var topRow 	       = grid[0].join('');
+	var middleRow      = grid[1].join('');
+	var bottomRow      = grid[2].join('');
+	var leftCol        = grid[0][0] + grid[1][0] + grid[2][0];
+	var middleCol      = grid[0][1] + grid[1][1] + grid[2][1];
+	var rightCol       = grid[0][2] + grid[1][2] + grid[2][2];
+	var diagTopLeft    = grid[0][0] + grid[1][1] + grid[2][2];
+	var diagTopRight   = grid[0][2] + grid[1][1] + grid[2][0];
 		
 		 if (topRow       === 'OOO') {winner = 'O'}
 	else if (middleRow    === 'OOO') {winner = 'O'}
@@ -119,8 +120,8 @@ function getWinner() {
 			squares[i].value = null;
 		}
 
-		// reset tracker to empty array
-		tracker = [["","",""],["","",""],["","",""]];
+		// reset grid to empty array
+		grid = [["","",""],["","",""],["","",""]];
 	}
 
 }
