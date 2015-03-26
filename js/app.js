@@ -1,3 +1,12 @@
+// draw line through winning line
+// add brush stroke to grid
+// add tally mark for scores
+// add animaation on score
+// track whose turn it is
+// who goes first
+// track stats
+
+
 (function(){
 
 // Declare global variables
@@ -36,15 +45,15 @@ function click() {
 		tictactoe.player2 = true;
 
 		// Depending on which ID# is clicked, set the corresponding grid
-			 if (self.id == 1) {grid[0][0] = 'O'}
-		else if (self.id == 2) {grid[0][1] = 'O'}
-		else if (self.id == 3) {grid[0][2] = 'O'}
-		else if (self.id == 4) {grid[1][0] = 'O'}
-		else if (self.id == 5) {grid[1][1] = 'O'}
-		else if (self.id == 6) {grid[1][2] = 'O'}
-		else if (self.id == 7) {grid[2][0] = 'O'}
-		else if (self.id == 8) {grid[2][1] = 'O'}
-		else if (self.id == 9) {grid[2][2] = 'O'}
+			 if (self.id == 'box1') {grid[0][0] = 'O'}
+		else if (self.id == 'box2') {grid[0][1] = 'O'}
+		else if (self.id == 'box3') {grid[0][2] = 'O'}
+		else if (self.id == 'box4') {grid[1][0] = 'O'}
+		else if (self.id == 'box5') {grid[1][1] = 'O'}
+		else if (self.id == 'box6') {grid[1][2] = 'O'}
+		else if (self.id == 'box7') {grid[2][0] = 'O'}
+		else if (self.id == 'box8') {grid[2][1] = 'O'}
+		else if (self.id == 'box9') {grid[2][2] = 'O'}
 	
 	}
 
@@ -54,15 +63,15 @@ function click() {
 		tictactoe.player2 = false;
 		tictactoe.player1 = true;
 
-			 if (self.id == 1) {grid[0][0] = 'X'}
-		else if (self.id == 2) {grid[0][1] = 'X'}
-		else if (self.id == 3) {grid[0][2] = 'X'}
-		else if (self.id == 4) {grid[1][0] = 'X'}
-		else if (self.id == 5) {grid[1][1] = 'X'}
-		else if (self.id == 6) {grid[1][2] = 'X'}
-		else if (self.id == 7) {grid[2][0] = 'X'}
-		else if (self.id == 8) {grid[2][1] = 'X'}
-		else if (self.id == 9) {grid[2][2] = 'X'}
+			 if (self.id == 'box1') {grid[0][0] = 'X'}
+		else if (self.id == 'box2') {grid[0][1] = 'X'}
+		else if (self.id == 'box3') {grid[0][2] = 'X'}
+		else if (self.id == 'box4') {grid[1][0] = 'X'}
+		else if (self.id == 'box5') {grid[1][1] = 'X'}
+		else if (self.id == 'box6') {grid[1][2] = 'X'}
+		else if (self.id == 'box7') {grid[2][0] = 'X'}
+		else if (self.id == 'box8') {grid[2][1] = 'X'}
+		else if (self.id == 'box9') {grid[2][2] = 'X'}
 	}
 	tracker();
 	getWinner();

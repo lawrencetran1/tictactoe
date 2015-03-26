@@ -69,13 +69,15 @@ h4 {
   float: left;
 }
 
+.score {
+	display: block;
+}
+
 .square {
 	font-family: brushFont;
 	height: 100px;
 	width: 100px;
 	padding: 25px;
-	border-right: 10px solid black;
-	border-bottom: 10px solid black;
 	display: inline-block;
 	position: relative;
 	vertical-align: top;
@@ -84,5 +86,47 @@ h4 {
 	color: black;
 }
 
+#box1 {
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+}
 
+#box2 {
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+	margin-left: -5px;
+}
 
+#box3 {
+	border-bottom: 5px solid black;
+	margin-left: -5px;
+}
+
+#box4 {
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+}
+
+#box5 {
+	border-right: 5px solid black;
+	border-bottom: 5px solid black;
+	margin-left: -5px;
+}
+
+#box6 {
+	border-bottom: 5px solid black;
+	margin-left: -5px;
+}
+
+#box7 {
+	border-right: 5px solid black;
+}
+
+#box8 {
+	border-right: 5px solid black;
+	margin-left: -5px;
+}
+
+#box9 {
+	margin-left: -5px;
+}
