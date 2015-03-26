@@ -13,8 +13,9 @@
 var squares = document.getElementsByClassName('square');
 var p1score = document.getElementById('p1');
 var p2score = document.getElementById('p2');
-var grid = [["","",""],["","",""],["","",""]];
-var winner = null;
+var grid = [[null,null,null],[null,null,null],[null,null,null]];
+var winMsg = null;
+var counter = 0;
 
 // Player 1 = 'O' and Player 2 = 'X'
 var tictactoe = {
@@ -73,6 +74,11 @@ function click() {
 		else if (self.id == 'box8') {grid[2][1] = 'X'}
 		else if (self.id == 'box9') {grid[2][2] = 'X'}
 	}
+
+	// increment counter on each click
+	counter++;
+	console.log(counter);
+
 	tracker();
 	getWinner();
 };
@@ -89,50 +95,70 @@ function tracker() {
 	var diagTopLeft    = grid[0][0] + grid[1][1] + grid[2][2];
 	var diagTopRight   = grid[0][2] + grid[1][1] + grid[2][0];
 		
-		 if (topRow       === 'OOO') {winner = 'O'}
-	else if (middleRow    === 'OOO') {winner = 'O'}
-	else if (bottomRow    === 'OOO') {winner = 'O'}
-	else if (leftCol      === 'OOO') {winner = 'O'}
-	else if (middleCol    === 'OOO') {winner = 'O'}
-	else if (rightCol     === 'OOO') {winner = 'O'}
-	else if (diagTopLeft  === 'OOO') {winner = 'O'}
-	else if (diagTopRight === 'OOO') {winner = 'O'}
-	else if (topRow       === 'XXX') {winner = 'X'}
-	else if (middleRow    === 'XXX') {winner = 'X'}
-	else if (bottomRow    === 'XXX') {winner = 'X'}
-	else if (leftCol      === 'XXX') {winner = 'X'}
-	else if (middleCol    === 'XXX') {winner = 'X'}
-	else if (rightCol     === 'XXX') {winner = 'X'}
-	else if (diagTopLeft  === 'XXX') {winner = 'X'}
-	else if (diagTopRight === 'XXX') {winner = 'X'}
+		 if (topRow       === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (middleRow    === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (bottomRow    === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (leftCol      === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (middleCol    === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (rightCol     === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (diagTopLeft  === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (diagTopRight === 'OOO') {winMsg = 'Player 1 wins!'}
+	else if (topRow       === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (middleRow    === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (bottomRow    === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (leftCol      === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (middleCol    === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (rightCol     === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (diagTopLeft  === 'XXX') {winMsg = 'Player 2 wins!'}
+	else if (diagTopRight === 'XXX') {winMsg = 'Player 2 wins!'}
 }
 
 // Create function to check winner. If there is a winner, reset the grid
 function getWinner() {
 
-	if (winner) {
+	if (winMsg != null) {
 
-		alert('winner is ' + winner);
+		alert(winMsg);
 
-			 if (winner === 'O') {tictactoe.p1score++}
-		else if (winner === 'X') {tictactoe.p2score++}
+		if (winMsg === 'Player 1 wins!') {
+			tictactoe.p1score++;
+		}
+
+		else if (winMsg === 'Player 2 wins!') {
+			tictactoe.p2score++
+		}
 
 		// Display score in HTML
-		console.log(tictactoe.p1score, tictactoe.p2score);
+		// console.log(tictactoe.p1score, tictactoe.p2score);
 		p1score.innerHTML = tictactoe.p1score;
 		p2score.innerHTML = tictactoe.p2score;
 
-		// reset innerHTML of each square to empty string
+		clear();
+	}
+
+	// if counter reaches 9, then it's a time game
+	else if (counter == 9 && winMsg === null) {
+		alert('Tie Game...');
+		clear();
+	}
+
+}
+
+// Create function to clear grid
+function clear() {
+
+		// reset innerHTML of each square to empty string, reset winner, and value
 		for (var i = 0; i < squares.length; i++) {
 			squares[i].innerHTML = "";
-			winner = null;
+			winMsg = null;
 			squares[i].value = null;
 		}
 
 		// reset grid to empty array
 		grid = [["","",""],["","",""],["","",""]];
-	}
 
+		// reset counter
+		counter = 0;
 }
 
 // Add add event lisenter to each square
