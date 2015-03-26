@@ -21,37 +21,47 @@ var tictactoe = {
 // If Player 2 is active, insert 'X', set tictactoe.player2 = false and tictactoe.player1 = true
 function click() {
 
+	// create capture variable
+	var self = this;
+
+	// if there is a value, exit function in order to not append additional text to div
+	if (self.value) {return}
+
 	if (tictactoe.player1) {
-		this.appendChild(document.createTextNode('O'));
+		self.appendChild(document.createTextNode('O'));
+
+		// Set value property to 'O' or 'X' in order to exit function, see if (self.value) return
+		self.value = 'O';
 		tictactoe.player1 = false;
 		tictactoe.player2 = true;
 
-			 if (this.id == 1) {tracker[0][0] = 'O'}
-		else if (this.id == 2) {tracker[0][1] = 'O'}
-		else if (this.id == 3) {tracker[0][2] = 'O'}
-		else if (this.id == 4) {tracker[1][0] = 'O'}
-		else if (this.id == 5) {tracker[1][1] = 'O'}
-		else if (this.id == 6) {tracker[1][2] = 'O'}
-		else if (this.id == 7) {tracker[2][0] = 'O'}
-		else if (this.id == 8) {tracker[2][1] = 'O'}
-		else if (this.id == 9) {tracker[2][2] = 'O'}
+			 if (self.id == 1) {tracker[0][0] = 'O'}
+		else if (self.id == 2) {tracker[0][1] = 'O'}
+		else if (self.id == 3) {tracker[0][2] = 'O'}
+		else if (self.id == 4) {tracker[1][0] = 'O'}
+		else if (self.id == 5) {tracker[1][1] = 'O'}
+		else if (self.id == 6) {tracker[1][2] = 'O'}
+		else if (self.id == 7) {tracker[2][0] = 'O'}
+		else if (self.id == 8) {tracker[2][1] = 'O'}
+		else if (self.id == 9) {tracker[2][2] = 'O'}
 	
 	}
 
 	else if (tictactoe.player2) {
-		this.appendChild(document.createTextNode('X'));
+		self.appendChild(document.createTextNode('X'));
+		self.value = 'X';
 		tictactoe.player2 = false;
 		tictactoe.player1 = true;
 
-			 if (this.id == 1) {tracker[0][0] = 'X'}
-		else if (this.id == 2) {tracker[0][1] = 'X'}
-		else if (this.id == 3) {tracker[0][2] = 'X'}
-		else if (this.id == 4) {tracker[1][0] = 'X'}
-		else if (this.id == 5) {tracker[1][1] = 'X'}
-		else if (this.id == 6) {tracker[1][2] = 'X'}
-		else if (this.id == 7) {tracker[2][0] = 'X'}
-		else if (this.id == 8) {tracker[2][1] = 'X'}
-		else if (this.id == 9) {tracker[2][2] = 'X'}
+			 if (self.id == 1) {tracker[0][0] = 'X'}
+		else if (self.id == 2) {tracker[0][1] = 'X'}
+		else if (self.id == 3) {tracker[0][2] = 'X'}
+		else if (self.id == 4) {tracker[1][0] = 'X'}
+		else if (self.id == 5) {tracker[1][1] = 'X'}
+		else if (self.id == 6) {tracker[1][2] = 'X'}
+		else if (self.id == 7) {tracker[2][0] = 'X'}
+		else if (self.id == 8) {tracker[2][1] = 'X'}
+		else if (self.id == 9) {tracker[2][2] = 'X'}
 	}
 	grid();
 	getWinner();
@@ -106,6 +116,7 @@ function getWinner() {
 		for (var i = 0; i < squares.length; i++) {
 			squares[i].innerHTML = "";
 			winner = null;
+			squares[i].value = null;
 		}
 
 		// reset tracker to empty array
