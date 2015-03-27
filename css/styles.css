@@ -144,6 +144,7 @@ li:nth-child(5n) {
 	font-size: 80px;
 	text-align: center;
 	color: black;
+	border: 1px solid black;
 }
 
 .star {
