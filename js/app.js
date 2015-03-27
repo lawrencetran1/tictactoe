@@ -3,19 +3,11 @@
 // add brush stroke to grid
 // add tally mark for scores
 // add animaation on score
-// track whose turn it is
 // who goes first
 // track stats
 
 
 (function(){
-
-	// test event
-	// var tally = document.getElementById('tally');
-	// tally.addEventListener('click', tallyMark);
-	// function tallyMark() {
-	// 	document.gete
-	// }
 
 	// Initialze variables
 	var squares = document.getElementsByClassName('square');

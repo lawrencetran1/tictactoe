@@ -75,12 +75,19 @@ li:nth-child(5n) {
 }
 
 .container {
-  width: 520px;
+  width: 600px;
+  height: 550px;
   position: relative;
   text-align: center;
   display: inline-block;
   float: left;
-  margin-left: 0px;
+  margin: 0 auto;
+  padding-top: 85px;
+  padding-right: 20px;
+  top: -75px;
+  left: 25px;
+  background-image: url(../images/frame.png);
+  background-size: 100% 100%; 
 }
 
 .result {
@@ -102,11 +109,18 @@ li:nth-child(5n) {
 	text-align: center;
 }
 
-.container-score {
-  width: 455px;
+.container-score-left {
+  width: 400px;
   position: relative;
   display: inline-block;
   float: left;
+}
+
+.container-score-right {
+  width: 400px;
+  position: relative;
+  display: inline-block;
+  float: right;
 }
 
 .score {
@@ -137,7 +151,7 @@ li:nth-child(5n) {
 	height: 50px;
 	width: 50px;
 	top: 30px;
-	left: 75px;
+	left: 55px;
 }
 
 .star img {
@@ -165,7 +179,7 @@ li:nth-child(5n) {
 	height: 700px;
 	position: absolute;
 	z-index: -1;
-	top: -95px;
+	top: -75px;
 	left: 0px;
 }
 
@@ -179,55 +193,55 @@ li:nth-child(5n) {
 }*/
 
 #box1 {
-	border-right: 8px solid black;
-	border-bottom: 8px solid black;
-	border-radius: 15px;
+	border-right: 8px solid rgb(180, 133, 41);
+	border-bottom: 8px solid rgb(180, 133, 41);
+/*	border-radius: 15px;*/
 }
 
 #box2 {
-	border-right: 8px solid black;
-	border-bottom: 8px solid black;
+	border-right: 8px solid rgb(180, 133, 41);
+	border-bottom: 8px solid rgb(180, 133, 41);
 	margin-left: -5px;
-	border-radius: 15px;
+/*	border-radius: 15px;*/
 }
 
 #box3 {
-	border-bottom: 8px solid black;
+	border-bottom: 8px solid rgb(180, 133, 41);
 	margin-left: -5px;
-	border-radius: 15px;
+/*	border-radius: 15px;*/
 }
 
 #box4 {
-	border-right: 8px solid black;
-	border-bottom: 8px solid black;
-	border-radius: 15px;
+	border-right: 8px solid rgb(180, 133, 41);
+	border-bottom: 8px solid rgb(180, 133, 41);
+/*	border-radius: 15px;*/
 }
 
 #box5 {
-	border-right: 8px solid black;
-	border-bottom: 8px solid black;
+	border-right: 8px solid rgb(180, 133, 41);
+	border-bottom: 8px solid rgb(180, 133, 41);
 	margin-left: -5px;
-	border-radius: 15px;
+/*	border-radius: 15px;*/
 }
 
 #box6 {
-	border-bottom: 8px solid black;
+	border-bottom: 8px solid rgb(180, 133, 41);
 	margin-left: -5px;
-	border-radius: 15px;
+/*	border-radius: 15px;*/
 }
 
 #box7 {
-	border-right: 8px solid black;
-	border-radius: 15px;
+	border-right: 8px solid rgb(180, 133, 41);
+/*	border-radius: 15px;*/
 }
 
 #box8 {
-	border-right: 8px solid black;
+	border-right: 8px solid rgb(180, 133, 41);
 	margin-left: -5px;
-	border-radius: 15px;
+/*	border-radius: 15px;*/
 }
 
 #box9 {
 	margin-left: -5px;
-	border-radius: 15px;
+/*	border-radius: 15px;*/
 }
