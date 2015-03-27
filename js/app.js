@@ -10,7 +10,12 @@
 
 (function(){
 
-	var tally = document.getElementById('tally');
+	// test event
+	// var tally = document.getElementById('tally');
+	// tally.addEventListener('click', tallyMark);
+	// function tallyMark() {
+	// 	document.gete
+	// }
 
 	// Initialze variables
 	var squares = document.getElementsByClassName('square');
@@ -18,6 +23,10 @@
 	var p2score = document.getElementById('p2score');
 	var star1 = document.getElementById('star1');
 	var star2 = document.getElementById('star2');
+	var p1wins = document.getElementById('p1wins');
+	var p2wins = document.getElementById('p2wins');
+	var tiegame = document.getElementById('tiegame');
+
 	// var positions = [];
 	// var x = [];
 	// var y = [];
@@ -42,11 +51,6 @@
 
 	// IIFE
 	(function(){
-
-		// var element = document.getElementById('some-id');
-		// var position = element.getBoundingClientRect();
-		// var x = position.left;
-		// var y = position.top;
 
 		// Add add event lisenter to each square
 		// Store x and y coordinates in array
@@ -172,14 +176,14 @@
 
 			console.log('combo with index of ' + winIndex + ' won');
 
-			alert(winMsg);
-
 			if (winMsg === 'Player 1 wins') {
 				tictactoe.p1score++;
+				p1wins.className = 'visible result';
 			}
 
 			else if (winMsg === 'Player 2 wins') {
 				tictactoe.p2score++
+				p2wins.className = 'visible result';
 			}
 
 			// Display score in HTML
@@ -187,13 +191,16 @@
 			p1score.innerHTML = tictactoe.p1score;
 			p2score.innerHTML = tictactoe.p2score;
 
-			clear();
+			// clear();
+			delayClear()
 		}
 
 		// if counter reaches 9, then it's a time game
 		else if (counter == 9 && winMsg === null) {
-			alert('Tie Game');
-			clear();
+			tiegame.className = 'visible result';
+
+			// clear();
+			delayClear()
 		}
 
 	};
@@ -203,6 +210,9 @@
 			
 			// Reset winMsg to null when game is over
 			winMsg = null;
+			p1wins.className = 'hidden';
+			p2wins.className = 'hidden';
+			tiegame.className = 'hidden';
 
 			// reset innerHTML and value of each square
 			for (var i = 0; i < squares.length; i++) {
@@ -218,5 +228,10 @@
 			// reset counter
 			counter = 0;
 	};
+
+	// Delay clear function by 1 second
+	function delayClear() {
+	    return setTimeout(clear, 1000);
+	}
 
 })();
