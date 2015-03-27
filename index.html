@@ -40,7 +40,10 @@
 	</div>
 
 	<div class="container">
-		<div class="square" ng-repeat="square in grid.squares"></div>
+		<div class="square" ng-repeat="square in grid.squares" ng-click="grid.click($index)">
+			<div class="x visible" ng-class="{visible: square[$index].used}">{{square.player}}</div>
+			<div class="o visible" ng-class="{visible: square[$index].used}">{{square.player}}</div>
+		</div>
 
 <!-- 		<div class="square" id="box1"></div>
 		<div class="square" id="box2"></div>
