@@ -10,12 +10,19 @@
 
 (function(){
 
+	var tally = document.getElementById('tally');
+
 	// Initialze variables
 	var squares = document.getElementsByClassName('square');
 	var p1score = document.getElementById('p1score');
 	var p2score = document.getElementById('p2score');
 	var star1 = document.getElementById('star1');
 	var star2 = document.getElementById('star2');
+	// var positions = [];
+	// var x = [];
+	// var y = [];
+	var winIndex = null;
+	// var winningCoords = [];
 
 	// Initialize grid with null in each spot
 	var grid = [[null,null,null],
@@ -33,10 +40,29 @@
 		p2score: 0
 	};
 
+	// IIFE
+	(function(){
+
+		// var element = document.getElementById('some-id');
+		// var position = element.getBoundingClientRect();
+		// var x = position.left;
+		// var y = position.top;
+
+		// Add add event lisenter to each square
+		// Store x and y coordinates in array
+		for (var i = 0; i < squares.length; i++) {
+			squares[i].addEventListener('click', click);
+			// positions.push(squares[i].getBoundingClientRect());
+			// x.push(positions[i].left);
+			// y.push(positions[i].top);
+		};
+
+	})();
+
 	// Create click function which is called on event listener 'click'
 	// When square is clicked, if value of square is true, then exit loop
-	// If Player 1 is active, insert 'O', set tictactoe.player1 = false and tictactoe.player2 = true
-	// If Player 2 is active, insert 'X', set tictactoe.player2 = false and tictactoe.player1 = true
+	// If Player 1 is active, insert 'O', set player1 to false and player2 to true
+	// If Player 2 is active, insert 'X', set player2 to false and player1 to true
 	function click() {
 
 		// create capture variable
@@ -73,7 +99,7 @@
 			star2.className = 'hidden';
 			star1.className = 'star';
 
-			// Set value property to 'O' or 'X' in order to exit function, see if (self.value) return
+			// Set value property to 'O' or 'X' in order to exit function, see if (self.value) return at top of click function
 			self.value = 'X';
 			tictactoe.player2 = false;
 			tictactoe.player1 = true;
@@ -110,28 +136,18 @@
 		var diagTopLeft    = grid[0][0] + grid[1][1] + grid[2][2];
 		var diagTopRight   = grid[0][2] + grid[1][1] + grid[2][0];
 
-		// !! TRY TO CONDENSE THIS INTO A SINGLE STRING AND CHECK IF THERE IS 3 IN A ROW !!
-		// var result = grid[0].join('') + ' ' +
-		// 			 grid[1].join('') + ' ' +
-		// 			 grid[2].join('') + ' ' +
-		// 			 grid[0][0] + grid[1][0] + grid[2][0] + ' ' +
-		// 			 grid[0][1] + grid[1][1] + grid[2][1] + ' ' +
-		// 			 grid[0][2] + grid[1][2] + grid[2][2] + ' ' +
-		// 			 grid[0][0] + grid[1][1] + grid[2][2] + ' ' +
-		// 			 grid[0][2] + grid[1][1] + grid[2][0]
-
-		//  console.log(result);
-
 		// Insert each result into an array
 		var combinations = [topRow, middleRow, bottomRow, leftCol, middleCol, rightCol, diagTopLeft, diagTopRight];
 
 		// Loop through combinations to check if O or X won and set winMsg accordingly
 		for (var i = 0; i < combinations.length; i++) {
 			if (combinations[i] === 'OOO') {
-				winMsg = 'Player 1 wins!';
+				winMsg = 'Player 1 wins';
+				winIndex = combinations.indexOf(combinations[i]);
 			}
 			else if (combinations[i] === 'XXX') {
-				winMsg = 'Player 2 wins!';
+				winMsg = 'Player 2 wins';
+				winIndex = combinations.indexOf(combinations[i]);
 			}
 		};
 			
@@ -140,15 +156,29 @@
 	// Create function to check winner. If there is a winner, reset the grid
 	function getWinner() {
 
+		// var comboString = 
+		// 	[
+		// 		[ x[0], x[2], y[0], y[2] ], // topRow
+		// 		[ x[3], x[5], y[3], y[5] ], // middleRow
+		// 		[ x[6], x[8], y[6], y[8] ], // bottomRow
+		// 		[ x[0], x[6], y[0], y[6] ], // leftCol
+		// 		[ x[1], x[7], y[1], y[7] ], // middleCol
+		// 		[ x[2], x[8], y[2], y[8] ], // rightCol
+		// 		[ x[0], x[8], y[0], y[0] ], // diagTopLeft
+		// 		[ x[2], x[6], y[2], y[6] ], // diagTopRight
+		// 	];
+
 		if (winMsg != null) {
 
-			alertify.alert(winMsg);
+			console.log('combo with index of ' + winIndex + ' won');
 
-			if (winMsg === 'Player 1 wins!') {
+			alert(winMsg);
+
+			if (winMsg === 'Player 1 wins') {
 				tictactoe.p1score++;
 			}
 
-			else if (winMsg === 'Player 2 wins!') {
+			else if (winMsg === 'Player 2 wins') {
 				tictactoe.p2score++
 			}
 
@@ -162,11 +192,11 @@
 
 		// if counter reaches 9, then it's a time game
 		else if (counter == 9 && winMsg === null) {
-			alertify.alert('Tie Game...');
+			alert('Tie Game');
 			clear();
 		}
 
-	}
+	};
 
 	// Create function to clear grid
 	function clear() {
@@ -187,28 +217,6 @@
 
 			// reset counter
 			counter = 0;
-	}
-
-	// IIFE
-	(function(){
-
-		var positions = [];
-		// var element = document.getElementById('some-id');
-		// var position = element.getBoundingClientRect();
-		// var x = position.left;
-		// var y = position.top;
-
-		// Add add event lisenter to each square
-		for (var i = 0; i < squares.length; i++) {
-			squares[i].addEventListener('click', click);
-			positions.push(squares[i].getBoundingClientRect());
-		};
-
-		// Store x and y coordinates of each square
-		// Draw line though squares if player is able to get three in a row
-
-
-
-	})();
+	};
 
 })();

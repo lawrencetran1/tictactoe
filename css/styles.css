@@ -15,31 +15,52 @@ body {
 /*Header styles
 ====================================*/
 
-header {
-	color: black;
+.header {
+	background-color: black;
+	padding-top: 1px;
 	text-align: center;
-	width: 75%;
-	margin: 25px auto;
+	width: 100%;
+	margin: 0 auto;
 	font-family: brushFont;
+	font-size: 36px;
+	position: relative;
+	top: -40px;
 }
 
 h1 {
 	font-family: brushFont;
 	font-weight: normal;
-	font-size: 80px;
-	color: black;
+	font-size: 60px;
+	color: white;
 	text-align: center;
-	margin: 25px auto;
 }
 
 h4 {
 	font-family: brushFont;
 	font-weight: normal;
-	font-size: 40px;
+	font-size: 60px;
 	color: black;
 	text-align: center;
 	display: block;
 	margin: 25px auto;
+}
+
+li {
+    display: inline-block;
+    height: 20px;
+    border: 2px solid #000;
+    margin: 0 2px 0 0;
+}
+
+li:nth-child(5n) {
+    -webkit-transform: rotate(300deg);
+    -moz-transform: rotate(300deg);
+    -o-transform: rotate(300deg);
+    height: 30px;
+    position: relative;
+    left: -15px;
+    top: 5px;
+    margin-right: 10px;
 }
 
 /*Main container styles
@@ -72,7 +93,7 @@ h4 {
 .score {
 	font-family: brushFont;
 	font-weight: normal;
-	font-size: 40px;
+	font-size: 72px;
 	color: black;
 	text-align: center;
 	display: block;
@@ -94,8 +115,10 @@ h4 {
 
 .star {
 	position: absolute;
-	height: 100px;
-	width: 100px;
+	height: 50px;
+	width: 50px;
+	top: 30px;
+	left: 75px;
 }
 
 .star img {
@@ -105,6 +128,24 @@ h4 {
 .hidden {
 	display: none;
 }
+
+.scroll {
+	width: 100%;
+	height: 700px;
+	position: absolute;
+	z-index: -1;
+	top: -95px;
+	left: 0px;
+}
+
+.scroll img {
+	max-width: 100%;
+	height: 600px;
+}
+
+/*#RSS {
+    background: url("../images/socialNav.png") 0 -60px no-repeat;
+}*/
 
 /*.row {
 	top: 0px;
@@ -178,47 +219,3 @@ h4 {
 	margin-left: -5px;
 	border-radius: 15px;
 }
-
-#animated { 
-   position: absolute;
-} 
-
-.animated { 
-   -webkit-animation-duration: 1s; 
-   animation-duration: 1s; 
-   -webkit-animation-fill-mode: both; 
-   animation-fill-mode: both; 
-   animation-iteration-count:infinite; 
-   -webkit-animation-iteration-count:infinite; 
-} 
-
-@-webkit-keyframes rotateIn { 
-    0% { 
-        -webkit-transform-origin: center center; 
-        -webkit-transform: rotate(-360deg); 
-        opacity: 1; 
-    } 
-    100% { 
-        -webkit-transform-origin: center center; 
-        -webkit-transform: rotate(0); 
-        opacity: 1; 
-    } 
-} 
-@keyframes rotateIn { 
-    0% { 
-        transform-origin: center center; 
-        transform: rotate(-3360deg); 
-        opacity: 0; 
-    } 
-    100% { 
-        transform-origin: center center; 
-        transform: rotate(0); 
-        opacity: 1; 
-    } 
-} 
-.rotateIn { 
-    -webkit-animation-name: rotateIn; 
-    animation-name: rotateIn; 
-}
-
-
