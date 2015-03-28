@@ -16,8 +16,7 @@
 				tie: null,
 				p1score: 0,
 				p2score: 0,
-				winner: null,
-				gameover: false
+				winner: null
 			}
 
 			// Initialize grid with null in each spot
@@ -83,12 +82,12 @@
 				grid[0][0] = elements[0];  // top row
 				grid[0][1] = elements[1];  // top row
 				grid[0][2] = elements[2];  // top row
-				grid[1][0] = elements[3];
-				grid[1][1] = elements[4];
-				grid[1][2] = elements[5];
-				grid[2][0] = elements[6];
-				grid[2][1] = elements[7];
-				grid[2][2] = elements[8];
+				grid[1][0] = elements[3];  // middle row
+				grid[1][1] = elements[4];  // middle row
+				grid[1][2] = elements[5];  // middle row
+				grid[2][0] = elements[6];  // bottom row
+				grid[2][1] = elements[7];  // bottom row
+				grid[2][2] = elements[8];  // bottom row
 
 				// Parse result of grid into a string
 				var topRow 	       = grid[0].join('');
@@ -145,13 +144,14 @@
 				self.tracker.p1wins = null;
 				self.tracker.p2wins = null;
 				self.tracker.tie = null;
+				self.tracker.winner = null;
 				self.squares.forEach(function(ele) {
 					ele.player = null;
 					ele.used = false;
 				});
 				counter = 0;
-				var elements = [null,null,null,null,null,null,null,null,null];
-				var grid = [
+				elements = [null,null,null,null,null,null,null,null,null];
+				grid = [
 								[null,null,null],
 								[null,null,null],
 								[null,null,null]
