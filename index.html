@@ -10,80 +10,105 @@
 </head>
 
 <!-- initialize GridController and set alias as 'grid' -->
-<body ng-controller="GridController as grid">
+<body>
 
-
-
-<!-- hidden divs that show when either player 1 wins, player 2 wins, or tie game -->
-<div class="hidden result" ng-class="{visible: grid.tracker.p1wins}" id="p1wins">
-	<h1>Player 1 Wins</h1>
-</div>
-
-<div class="hidden result" ng-class="{visible: grid.tracker.p2wins}" id="p2wins">
-	<h1>Player 2 Wins</h1>
-</div>
-
-<div class="hidden result" ng-class="{visible: grid.tracker.tie}" id="tiegame">
-	<h1>Tie Game</h1>
-</div>
-
-
-
-<!-- header -->
-<div class="header"> 
-	<h1>Tic Tac Toe</h1> 
-</div>
-
-
-
-<!-- main container that contains player 1 container, grid container, and player 2 container -->
-<div class="main">
-
-
-
-	<!-- container div for player 1 -->
-	<div class="container-score-left">
+	<div class="tictactoe" ng-controller="GridController as grid">
 		
-		<div class="scroll" id="scroll1">
-			<img src="images/scroll.png">
+		<!-- hidden divs that show when either player 1 wins, player 2 wins, or tie game -->
+		<div class="hidden result" ng-class="{visible: grid.tracker.p1wins}" id="p1wins">
+			<h1>Player 1 Wins</h1>
 		</div>
 
-		<div class="star" id="star1" ng-class="{hidden: grid.turn=1}">
-			<img src="images/star.png">
+		<div class="hidden result" ng-class="{visible: grid.tracker.p2wins}" id="p2wins">
+			<h1>Player 2 Wins</h1>
 		</div>
 
-		<span class="score"><h4>Player 1</h4></span>
-		<span class="score" id="p1score">{{grid.tracker.p1score}}</span>
+		<div class="hidden result" ng-class="{visible: grid.tracker.tie}" id="tiegame">
+			<h1>Tie Game</h1>
+		</div>
+
+
+
+		<!-- header -->
+		<div class="header-container">
+			
+			<div class="header"> 
+
+				<nav id="primary_nav_wrap">
+					<ul>
+					  <li><a href="#">Grid Size</a>
+					    <ul>
+					      <!-- pass in number of squares that belong to each grid as a parameter to use in controller -->
+					      <li ng-click="grid.changeGrid(9)"><a href="#">3x3</a></li>
+					      <li ng-click="grid.changeGrid(16)"><a href="#">4x4</a></li>
+					      <li ng-click="grid.changeGrid(25)"><a href="#">5x5</a></li>
+					    </ul>
+					  </li>
+					  
+					</ul>
+				</nav>
+
+				<div class="title">
+					<h1>Tic Tac Toe</h1>
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+		<!-- main container that contains player 1 container, grid container, and player 2 container -->
+		<div class="main">
+
+			<!-- container div for player 1 -->
+			<div class="container-score-left">
+				
+				<div class="scroll" id="scroll1">
+					<img src="images/scroll.png">
+				</div>
+
+				<div class="star" id="star1" ng-class="{hidden: grid.turn=1}">
+					<img src="images/star.png">
+				</div>
+
+				<span class="score"><h4>Player 1</h4></span>
+				<span class="score" id="p1score">{{grid.tracker.p1score}}</span>
+			</div>
+
+
+
+			<!-- container div for grid -->
+			<!-- use ng-class to change square sizes based on which grid is selected -->
+			<!-- use ng-repeat to repeat divs and limit to number of squares based on ng-click parameter -->
+			<div class="container">
+				<div ng-class="{'square3': grid.select[0].active, 'square4': grid.select[1].active, 'square5': grid.select[2].active}" ng-repeat="square in grid.squares | limitTo: grid.gridSize" ng-click="grid.click($index)">
+					<div class="playermove">{{square.player}}</div>
+				</div>
+
+			</div>
+
+
+
+			<!-- container div for player 2 -->
+			<div class="container-score-right">
+
+				<div class="scroll" id="scroll2">
+					<img src="images/scroll.png">
+				</div>
+
+				<div class="hidden" id="star2">
+					<img src="images/star.png">
+				</div>
+
+				<span class="score"><h4>Player 2</h4></span>
+				<span class="score" id="p2score">{{grid.tracker.p2score}}</span>
+			</div>
+
+		</div>
+
 	</div>
 
-
-
-	<!-- container div for grid -->
-	<div class="container">
-		<div class="square" ng-repeat="square in grid.squares" ng-click="grid.click($index)">
-			<div class="playermove">{{square.player}}</div>
-		</div>
-
-	</div>
-
-
-
-	<!-- container div for player 2 -->
-	<div class="container-score-right">
-
-		<div class="scroll" id="scroll2">
-			<img src="images/scroll.png">
-		</div>
-
-		<div class="hidden" id="star2">
-			<img src="images/star.png">
-		</div>
-
-		<span class="score"><h4>Player 2</h4></span>
-		<span class="score" id="p2score">{{grid.tracker.p2score}}</span>
-	</div>
-
-</div>
 
 
 

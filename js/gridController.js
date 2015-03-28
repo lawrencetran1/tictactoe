@@ -4,6 +4,10 @@
 // change bamboo grid to japanese window grid
 // add chat
 // add firebase backend
+// fix checkbox
+// add bombs ~ 33% chance of hitting one, lose turn when stepping on a bomb
+// limit ng-repeat to self.select.count -> should change grid accordingly
+
 
 
 // IIFE
@@ -17,6 +21,34 @@
 
 			// capture variable and initialize variables
 			var self = this;
+
+			self.select = [
+				{id: '3x3 Grid', active: true},
+				{id: '4x4 Grid', active: false},
+				{id: '5x5 Grid', active: false}
+			];
+
+			self.gridSize = 9;
+
+			self.changeGrid = function(num) {
+				console.log(num);
+				self.gridSize = num;
+				if (num == 9) {
+					self.select[0].active = true;
+					self.select[1].active = false;
+					self.select[2].active = false;
+				}
+				else if (num == 16) {
+					self.select[1].active = true;
+					self.select[0].active = false;
+					self.select[2].active = false;
+				}
+				else if (num == 25) {
+					self.select[2].active = true;
+					self.select[0].active = false;
+					self.select[1].active = false;
+				}
+			}
 
 			self.tracker = {
 				p1turn: true, 	// initialize p1turn variable to check whose turn it is
@@ -50,8 +82,25 @@
 								{id: 'square6', used: false, player: null},		// middle right square
 								{id: 'square7', used: false, player: null},		// bottom left square
 								{id: 'square8', used: false, player: null},		// bottom middle square
-								{id: 'square9', used: false, player: null}		// bottom right square
+								{id: 'square9', used: false, player: null},		// bottom right square
+								{id: 'square10', used: false, player: null},
+								{id: 'square11', used: false, player: null},
+								{id: 'square12', used: false, player: null},
+								{id: 'square13', used: false, player: null},
+								{id: 'square14', used: false, player: null},
+								{id: 'square15', used: false, player: null},
+								{id: 'square16', used: false, player: null},
+								{id: 'square17', used: false, player: null},
+								{id: 'square18', used: false, player: null},
+								{id: 'square19', used: false, player: null},
+								{id: 'square20', used: false, player: null},
+								{id: 'square21', used: false, player: null},
+								{id: 'square22', used: false, player: null},
+								{id: 'square23', used: false, player: null},
+								{id: 'square24', used: false, player: null},
+								{id: 'square25', used: false, player: null}
 							];
+
 
 			self.click = function($index) {
 				
