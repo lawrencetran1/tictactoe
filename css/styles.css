@@ -155,11 +155,7 @@ li:nth-child(5n) {
 	left: 55px;
 }
 
-.x {
-	position: absolute;
-}
-
-.o {
+.move {
 	position: absolute;
 }
 
@@ -200,57 +196,3 @@ li:nth-child(5n) {
 /*#RSS {
     background: url("../images/socialNav.png") 0 -60px no-repeat;
 }*/
-
-#box1 {
-	border-right: 8px solid rgb(180, 133, 41);
-	border-bottom: 8px solid rgb(180, 133, 41);
-/*	border-radius: 15px;*/
-}
-
-#box2 {
-	border-right: 8px solid rgb(180, 133, 41);
-	border-bottom: 8px solid rgb(180, 133, 41);
-	margin-left: -5px;
-/*	border-radius: 15px;*/
-}
-
-#box3 {
-	border-bottom: 8px solid rgb(180, 133, 41);
-	margin-left: -5px;
-/*	border-radius: 15px;*/
-}
-
-#box4 {
-	border-right: 8px solid rgb(180, 133, 41);
-	border-bottom: 8px solid rgb(180, 133, 41);
-/*	border-radius: 15px;*/
-}
-
-#box5 {
-	border-right: 8px solid rgb(180, 133, 41);
-	border-bottom: 8px solid rgb(180, 133, 41);
-	margin-left: -5px;
-/*	border-radius: 15px;*/
-}
-
-#box6 {
-	border-bottom: 8px solid rgb(180, 133, 41);
-	margin-left: -5px;
-/*	border-radius: 15px;*/
-}
-
-#box7 {
-	border-right: 8px solid rgb(180, 133, 41);
-/*	border-radius: 15px;*/
-}
-
-#box8 {
-	border-right: 8px solid rgb(180, 133, 41);
-	margin-left: -5px;
-/*	border-radius: 15px;*/
-}
-
-#box9 {
-	margin-left: -5px;
-/*	border-radius: 15px;*/
-}

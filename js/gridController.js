@@ -53,7 +53,7 @@
 				if (square.used) return;
 
 				// when square is clicked, change used property to true, and set player property to 'x' or 'o'
-				self.squares[$index].used = true;
+				square.used = true;
 
 				if (self.turn == 1) {
 					square.player = 'X';
@@ -80,9 +80,9 @@
 			function tracker() {
 
 				// Convert array into 3x3 matrix
-				grid[0][0] = elements[0];
-				grid[0][1] = elements[1];
-				grid[0][2] = elements[2];
+				grid[0][0] = elements[0];  // top row
+				grid[0][1] = elements[1];  // top row
+				grid[0][2] = elements[2];  // top row
 				grid[1][0] = elements[3];
 				grid[1][1] = elements[4];
 				grid[1][2] = elements[5];
@@ -120,32 +120,42 @@
 
 				if (self.tracker.winner == 1) {
 					self.tracker.p1score++;
+
+					// set p1wins to true to display Player 1 Wins in div with ng-class
 					self.tracker.p1wins = true;
-					self.tracker.gameover = true;
 					$timeout(clearGrid, 1000);
 				}
 				else if (self.tracker.winner == 2) {
 					self.tracker.p2score++;
+
+					// set p2wins to true to display Player 2 Wins in div with ng-class
 					self.tracker.p2wins = true;
-					self.tracker.gameover = true;
 					$timeout(clearGrid, 1000);
 				}
 				else if (self.tracker.winner === null && counter == 9) {
+
+					// set tie to true to display Tie Game in div with ng-class
 					self.tracker.tie = true;
-					self.tracker.gameover = true;
 					$timeout(clearGrid, 1000);
 				}
 
 			};
 
 			function clearGrid() {
-				self.tracker.p1wins = false;
-				self.tracker.p2wins = false;
-				self.tracker.tie = false;
-				self.tracker.gameover = false;
+				self.tracker.p1wins = null;
+				self.tracker.p2wins = null;
+				self.tracker.tie = null;
 				self.squares.forEach(function(ele) {
+					ele.player = null;
 					ele.used = false;
 				});
+				counter = 0;
+				var elements = [null,null,null,null,null,null,null,null,null];
+				var grid = [
+								[null,null,null],
+								[null,null,null],
+								[null,null,null]
+							];
 			};
 
 
