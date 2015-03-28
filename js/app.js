@@ -137,11 +137,11 @@
 
 		// Loop through combinations to check if O or X won and set winMsg accordingly
 		for (var i = 0; i < combinations.length; i++) {
-			if (combinations[i] === 'OOO') {
+			if (combinations[i] === 'XXX') {
 				winMsg = 'Player 1 wins';
 				winIndex = combinations.indexOf(combinations[i]);
 			}
-			else if (combinations[i] === 'XXX') {
+			else if (combinations[i] === 'OOO') {
 				winMsg = 'Player 2 wins';
 				winIndex = combinations.indexOf(combinations[i]);
 			}
@@ -189,10 +189,11 @@
 
 		// if counter reaches 9, then it's a time game
 		else if (counter == 9 && winMsg === null) {
+			console.log('tie game');
 			tiegame.className = 'visible result';
 
 			// clear();
-			delayClear()
+			// delayClear()
 		}
 
 	};

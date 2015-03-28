@@ -8,15 +8,15 @@
 </head>
 <body ng-controller="GridController as grid">
 
-<div class="hidden result" id="p1wins">
+<div class="hidden result" ng-class="{visible: grid.tracker.p1wins}" id="p1wins">
 	<h1>Player 1 Wins</h1>
 </div>
 
-<div class="hidden result" id="p2wins">
+<div class="hidden result" ng-class="{visible: grid.tracker.p2wins}" id="p2wins">
 	<h1>Player 2 Wins</h1>
 </div>
 
-<div class="hidden result" id="tiegame">
+<div class="hidden result" ng-class="{visible: grid.tracker.tie}" id="tiegame">
 	<h1>Tie Game</h1>
 </div>
 
@@ -36,7 +36,7 @@
 		</div>
 
 		<span class="score"><h4>Player 1</h4></span>
-		<span class="score" id="p1score">0</span>
+		<span class="score" id="p1score">{{grid.tracker.p1score}}</span>
 	</div>
 
 	<div class="container">
@@ -67,7 +67,7 @@
 		</div>
 
 		<span class="score"><h4>Player 2</h4></span>
-		<span class="score" id="p2score">0</span>
+		<span class="score" id="p2score">{{grid.tracker.p2score}}</span>
 	</div>
 
 </div>
