@@ -2,12 +2,19 @@
 <html ng-app="myApp">
 <head>
 	<title>Tic Tac Toe</title>
+
+	<!-- source in style sheets -->
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 
 </head>
+
+<!-- initialize GridController and set alias as 'grid' -->
 <body ng-controller="GridController as grid">
 
+
+
+<!-- hidden divs that show when either player 1 wins, player 2 wins, or tie game -->
 <div class="hidden result" ng-class="{visible: grid.tracker.p1wins}" id="p1wins">
 	<h1>Player 1 Wins</h1>
 </div>
@@ -20,11 +27,21 @@
 	<h1>Tie Game</h1>
 </div>
 
+
+
+<!-- header -->
 <div class="header"> 
 	<h1>Tic Tac Toe</h1> 
 </div>
 
+
+
+<!-- main container that contains player 1 container, grid container, and player 2 container -->
 <div class="main">
+
+
+
+	<!-- container div for player 1 -->
 	<div class="container-score-left">
 		
 		<div class="scroll" id="scroll1">
@@ -39,22 +56,19 @@
 		<span class="score" id="p1score">{{grid.tracker.p1score}}</span>
 	</div>
 
+
+
+	<!-- container div for grid -->
 	<div class="container">
 		<div class="square" ng-repeat="square in grid.squares" ng-click="grid.click($index)">
-			<div class="move">{{square.player}}</div>
+			<div class="playermove">{{square.player}}</div>
 		</div>
 
-<!-- 		<div class="square" id="box1"></div>
-		<div class="square" id="box2"></div>
-		<div class="square" id="box3"></div>
-		<div class="square" id="box4"></div>
-		<div class="square" id="box5"></div>
-		<div class="square" id="box6"></div>
-		<div class="square" id="box7"></div>
-		<div class="square" id="box8"></div>
-		<div class="square" id="box9"></div> -->
 	</div>
 
+
+
+	<!-- container div for player 2 -->
 	<div class="container-score-right">
 
 		<div class="scroll" id="scroll2">
@@ -71,6 +85,9 @@
 
 </div>
 
+
+
+<!-- source in javascript files -->
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/main.js"></script>

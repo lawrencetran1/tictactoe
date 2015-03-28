@@ -5,73 +5,68 @@
 		.module('myApp')
 		.controller('GridController', GridController);
 
-		function GridController($timeout) {
+		function GridController($timeout) {  // pass $timeout service in order to delay clearGrid function
 
 			// capture variable and initialize variables
 			var self = this;
 
 			self.tracker = {
-				p1wins: null,
-				p2wins: null,
-				tie: null,
-				p1score: 0,
-				p2score: 0,
-				winner: null
+				p1wins: null, // initialize p1wins variable to display flash screen when true
+				p2wins: null, // initialize p2wins variable to display flash screen when true
+				tie: null, 	  // initialize tie variable to display flash screen when true
+				p1score: 0,   // initialize p1score variable to track p1 score -> bind to html
+				p2score: 0,   // initialize p2score variable to track p2 score -> bind to html
+				winner: null  // intialize winner variable to be able to clear grid once game is over
 			}
 
-			// Initialize grid with null in each spot
-			var elements = [null,null,null,null,null,null,null,null,null];
-			var grid = [
-							[null,null,null],
-							[null,null,null],
-							[null,null,null]
+			var elements = [null,null,null,null,null,null,null,null,null];  // initalize elements array to insert move in proper index
+
+			var grid = [						// initialize 3x3 grid to insert corresponding elements into their corresponding position
+							[null,null,null],	// top row
+							[null,null,null],   // middle row
+							[null,null,null]    // bottomk row
 						];
 
-			var counter = 0;
+			var counter = 0;	// when counter hits 9 and there is no winner, then it is a tie game
 
-			// Player 1 turn is 1 and Player 2 turn is 2
-			self.turn = 1;
+			self.turn = 1;		// Player 1 turn is 1 and Player 2 turn is 2
 
 			self.squares = [
-								{id: 'square1', used: false, player: null},
-								{id: 'square2', used: false, player: null},
-								{id: 'square3', used: false, player: null},
-								{id: 'square4', used: false, player: null},
-								{id: 'square5', used: false, player: null},
-								{id: 'square6', used: false, player: null},
-								{id: 'square7', used: false, player: null},
-								{id: 'square8', used: false, player: null},
-								{id: 'square9', used: false, player: null}
+								{id: 'square1', used: false, player: null},		// top left square
+								{id: 'square2', used: false, player: null},		// top middle square
+								{id: 'square3', used: false, player: null},		// top right square
+								{id: 'square4', used: false, player: null},		// middle left square
+								{id: 'square5', used: false, player: null},		// middle square
+								{id: 'square6', used: false, player: null},		// middle right square
+								{id: 'square7', used: false, player: null},		// bottom left square
+								{id: 'square8', used: false, player: null},		// bottom middle square
+								{id: 'square9', used: false, player: null}		// bottom right square
 							];
 
 			self.click = function($index) {
 				
-				var square = self.squares[$index];
+				var square = self.squares[$index];	// create square variable using $index to select it
 
-				// check if the square is used, if true...exit function
-				if (square.used) return;
+				if (square.used) return;  // check if the square is used, if true...exit function
 
-				// when square is clicked, change used property to true, and set player property to 'x' or 'o'
-				square.used = true;
+				square.used = true;  // when square is clicked, change used property to true, and set player property to 'x' or 'o'
 
-				if (self.turn == 1) {
-					square.player = 'X';
-					elements.splice($index, 1, 'X');
-					self.turn = 2;
+				if (self.turn == 1) {					// if player 1's turn
+					square.player = 'X';				// set square's player property to 'X' -> bind to html
+					elements.splice($index, 1, 'X');	// remove null from square's index and insert 'X'
+					self.turn = 2;						// set turn to player 2
 				}
-				else if (self.turn == 2) {
-					square.player = 'O';
-					elements.splice($index, 1, 'O');
-					self.turn = 1;
+
+				else if (self.turn == 2) {				// if player 2's turn
+					square.player = 'O';				// set square's player property to 'O' -> bind to html
+					elements.splice($index, 1, 'O');	// remove null from square's index and insert 'O'
+					self.turn = 1;						// set turn to player 1
 				}
-				// console.log(elements);
 
-				// increment counter on each click
-				counter++;
+				counter++;  	// increment counter on each click, if counter == 9, then it's a tie game
 
-				// Call tracker function and getWinner function on each click to continuously check for winner
-				tracker();
-				getWinner();
+				tracker();		// call tracker function on each click to update grid on each click
+				getWinner();	// call getWinner function on each click to check for winner on each click
 
 			}
 
@@ -140,14 +135,15 @@
 
 			};
 
+			// reset everything
 			function clearGrid() {
 				self.tracker.p1wins = null;
 				self.tracker.p2wins = null;
 				self.tracker.tie = null;
 				self.tracker.winner = null;
-				self.squares.forEach(function(ele) {
-					ele.player = null;
-					ele.used = false;
+				self.squares.forEach(function(square) {
+					square.player = null;
+					square.used = false;
 				});
 				counter = 0;
 				elements = [null,null,null,null,null,null,null,null,null];
@@ -155,7 +151,7 @@
 								[null,null,null],
 								[null,null,null],
 								[null,null,null]
-							];
+						];
 			};
 
 

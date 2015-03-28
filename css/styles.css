@@ -45,7 +45,7 @@ h4 {
 	margin: 25px auto;
 }
 
-li {
+/*li {
     display: inline-block;
     height: 20px;
     border: 2px solid #000;
@@ -61,7 +61,7 @@ li:nth-child(5n) {
     left: -15px;
     top: 5px;
     margin-right: 10px;
-}
+}*/
 
 /*Main container styles
 ====================================*/
@@ -90,6 +90,23 @@ li:nth-child(5n) {
   background-size: 100% 100%; 
 }
 
+.container-score-left {
+  width: 400px;
+  position: relative;
+  display: inline-block;
+  float: left;
+}
+
+.container-score-right {
+  width: 400px;
+  position: relative;
+  display: inline-block;
+  float: right;
+}
+
+/*Splash screen styles
+================================*/
+
 .result {
     opacity:0.9;
     background-color:black;
@@ -109,29 +126,8 @@ li:nth-child(5n) {
 	text-align: center;
 }
 
-.container-score-left {
-  width: 400px;
-  position: relative;
-  display: inline-block;
-  float: left;
-}
-
-.container-score-right {
-  width: 400px;
-  position: relative;
-  display: inline-block;
-  float: right;
-}
-
-.score {
-	font-family: brushFont;
-	font-weight: normal;
-	font-size: 72px;
-	color: black;
-	text-align: center;
-	display: block;
-	margin: 25px auto;
-}
+/*Miscellaneous styles
+=======================================*/
 
 .square {
 	font-family: brushFont;
@@ -147,6 +143,16 @@ li:nth-child(5n) {
 	border: 1px solid black;
 }
 
+.score {
+	font-family: brushFont;
+	font-weight: normal;
+	font-size: 72px;
+	color: black;
+	text-align: center;
+	display: block;
+	margin: 25px auto;
+}
+
 .star {
 	position: absolute;
 	height: 50px;
@@ -155,12 +161,12 @@ li:nth-child(5n) {
 	left: 55px;
 }
 
-.move {
-	position: absolute;
-}
-
 .star img {
 	max-width: 100%;
+}
+
+.playermove {
+	position: relative;
 }
 
 .hidden {
