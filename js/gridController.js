@@ -1,3 +1,11 @@
+// add draw line through winning combination
+// add paper scissor rock to see who goes first
+// add ninja animation
+// change bamboo grid to japanese window grid
+// add chat
+// add firebase backend
+
+
 // IIFE
 (function(){
 
@@ -11,12 +19,14 @@
 			var self = this;
 
 			self.tracker = {
-				p1wins: null, // initialize p1wins variable to display flash screen when true
-				p2wins: null, // initialize p2wins variable to display flash screen when true
-				tie: null, 	  // initialize tie variable to display flash screen when true
-				p1score: 0,   // initialize p1score variable to track p1 score -> bind to html
-				p2score: 0,   // initialize p2score variable to track p2 score -> bind to html
-				winner: null  // intialize winner variable to be able to clear grid once game is over
+				p1turn: true, 	// initialize p1turn variable to check whose turn it is
+				p2turn: false,	// initialize p2turn variable to check whose turn it is
+				p1wins: null, 	// initialize p1wins variable to display flash screen when true
+				p2wins: null, 	// initialize p2wins variable to display flash screen when true
+				tie: null, 	  	// initialize tie variable to display flash screen when true
+				p1score: 0,   	// initialize p1score variable to track p1 score -> bind to html
+				p2score: 0,   	// initialize p2score variable to track p2 score -> bind to html
+				winner: null  	// intialize winner variable to be able to clear grid once game is over
 			}
 
 			var elements = [null,null,null,null,null,null,null,null,null];  // initalize elements array to insert move in proper index
@@ -51,16 +61,18 @@
 
 				square.used = true;  // when square is clicked, change used property to true, and set player property to 'x' or 'o'
 
-				if (self.turn == 1) {					// if player 1's turn
+				if (self.tracker.p1turn) {				// if player 1's turn is true
 					square.player = 'X';				// set square's player property to 'X' -> bind to html
 					elements.splice($index, 1, 'X');	// remove null from square's index and insert 'X'
-					self.turn = 2;						// set turn to player 2
+					self.tracker.p1turn = false;		// set player 1 turn to false
+					self.tracker.p2turn = true;			// set player 2 turn to true
 				}
 
-				else if (self.turn == 2) {				// if player 2's turn
+				else if (self.tracker.p2turn) {			// if player 2's turn is true
 					square.player = 'O';				// set square's player property to 'O' -> bind to html
 					elements.splice($index, 1, 'O');	// remove null from square's index and insert 'O'
-					self.turn = 1;						// set turn to player 1
+					self.tracker.p2turn = false;		// set player 2 turn to false
+					self.tracker.p1turn = true;			// set player 1 turn to true
 				}
 
 				counter++;  	// increment counter on each click, if counter == 9, then it's a tie game
@@ -112,36 +124,33 @@
 			// Create function to check winner. If there is a winner, reset the grid
 			function getWinner() {
 
-				if (self.tracker.winner == 1) {
-					self.tracker.p1score++;
-
-					// set p1wins to true to display Player 1 Wins in div with ng-class
-					self.tracker.p1wins = true;
-					$timeout(clearGrid, 1000);
+				if (self.tracker.winner == 1) {			// if player 1 wins...
+					self.tracker.p1score++;				// increment score for player 1
+					self.tracker.p1wins = true;			// set p1wins to true to display Player 1 Wins in div with ng-class
+					$timeout(clearGrid, 1000);			// clear grid after 1 second
 				}
-				else if (self.tracker.winner == 2) {
-					self.tracker.p2score++;
 
-					// set p2wins to true to display Player 2 Wins in div with ng-class
-					self.tracker.p2wins = true;
-					$timeout(clearGrid, 1000);
+				else if (self.tracker.winner == 2) {	// if player 2 wins...
+					self.tracker.p2score++;				// increment score for player 2
+					self.tracker.p2wins = true;			// set p2wins to true to display Player 2 Wins in div with ng-class
+					$timeout(clearGrid, 1000);			// clear grid after 1 second
 				}
-				else if (self.tracker.winner === null && counter == 9) {
 
-					// set tie to true to display Tie Game in div with ng-class
-					self.tracker.tie = true;
-					$timeout(clearGrid, 1000);
+				else if (self.tracker.winner === null && counter == 9) {		// in there is no winner and counter is 9...
+					self.tracker.tie = true;									// set tie to true to display Tie Game in div with ng-class
+					$timeout(clearGrid, 1000);									// clear grid after 1 second
 				}
 
 			};
 
-			// reset everything
+
+			// reset everything!!!!!!!!!!!!!!!!
 			function clearGrid() {
 				self.tracker.p1wins = null;
 				self.tracker.p2wins = null;
 				self.tracker.tie = null;
 				self.tracker.winner = null;
-				self.squares.forEach(function(square) {
+				self.squares.forEach(function(square) {		// loop through each square and set player to null and used to false
 					square.player = null;
 					square.used = false;
 				});
