@@ -21,82 +21,6 @@
 
 			var self = this;	// capture variable
 
-
-
-
-			var speed = 10;
-  			var topCount = 0;
-  			var leftCount = 0;
-			var mike = document.getElementById('mike');
-			function moveRight() {
-				leftCount += speed;
-				// animate();
-				// Stop at right border
-				if (leftCount > 260) {
-					leftCount = 260;
-				}
-				else {
-					mike.style.left = leftCount + 'px';
-				}
-			};
-
-			function moveDown() {
-				topCount += speed;
-				// animate();
-
-				// Stop at bottom border
-				if (topCount > 190) {
-					topCount = 190;
-				}
-				else {
-					mike.style.top = topCount + 'px';
-				}
-			};
-
-			function moveLeft() {
-				leftCount -= speed;
-				// animate();
-
-				// Stop at left border
-				if (leftCount < 0) {
-					leftCount = 0;
-				}
-				else {
-					mike.style.left = leftCount + 'px';
-				}
-			};
-
-			function moveUp() {
-				topCount -= speed;
-				// animate();
-
-				// Stop at top border
-				if (topCount < 0) {
-					topCount = 0;
-				}
-				else {
-					mike.style.top = topCount + 'px';
-				}
-			};
-
-			document.onkeydown = function(event) {
-
-			// Move right
-			if (event.keyCode === 39) {moveRight();}
-			// Move down
-			else if (event.keyCode === 40) {moveDown();}
-			// Move left
-			else if (event.keyCode === 37) {moveLeft();}
-			// Move up
-			else if (event.keyCode === 38) {moveUp();}
-			// Shoot continuous fireball
-			// else if (event.keyCode === 32) {shoot();}
-			};
-
-			
-
-
-
 			self.select = [
 				{id: '3x3 Grid', active: true},		// initialize grid sizes, 3x3 is default
 				{id: '4x4 Grid', active: false},
@@ -123,7 +47,7 @@
 					self.select[0].active = false;
 					self.select[1].active = false;
 				}
-			}
+			};
 
 			self.tracker = {
 				p1turn: true, 	// initialize p1turn variable to check whose turn it is
@@ -134,7 +58,7 @@
 				p1score: 0,   	// initialize p1score variable to track p1 score -> bind to html
 				p2score: 0,   	// initialize p2score variable to track p2 score -> bind to html
 				winner: null  	// intialize winner variable to be able to clear grid once game is over
-			}
+			};
 
 			self.roundZero = false;
 
@@ -228,20 +152,18 @@
 			// Create function that shows current state of the grid when click() is called
 			function tracker() {
 
-			// --------foo array--------
-			// [null,null,null,null,null] index 0
-			// [null,null,null,null,null] index 1
-			// [null,null,null,null,null] index 2
-			// [null,null,null,null,null] index 3
-			// [null,null,null,null,null] index 4
-				// var self = this;								// capture variable
-				// self.elements = elements;						// do not affect global elements array
-				// self.grid = [];									// initialize empty array
-				// while (self.elements.length) {					// run while loop as long as self.elements has a length
-				// 	self.grid.push(self.elements.splice(0,5))	// remove 5 elements at a time from self.elements and push into self.grid
-				// }												// when self.elements reaches zero length, while loop will end
+				var elementsCopy = [];							// initialize local empty array each time function is called
+				self.elements.forEach(function(ele) {			// for each element of the self.elements array
+					elementsCopy.push(ele);						// push the element into elementsCopy
+				});
+				var newGrid = [];								// initialize local empty array that will act as the updated grid
+				while (elementsCopy.length) {					// loop will run as long as the elementsCopy array has a length of greater than zero
+					newGrid.push(elementsCopy.splice(0,5));		// removes five elements at a time from elementsCopy and pushes it into newGrid
+				};												// this will create an updated 5x5 grid each time tracker function is called
+				console.log(newGrid);
 
-				// console.log(self.grid, self.elements, elements);
+				// calculate winning combinations
+
 
 
 				// Convert array into 3x3 matrix
@@ -323,6 +245,75 @@
 							[null,null,null,null,null]
 						];
 			};
+
+			var speed = 10;
+  			var topCount = 0;
+  			var leftCount = 0;
+			var mike = document.getElementById('mike');
+			function moveRight() {
+				leftCount += speed;
+				// animate();
+				// Stop at right border
+				if (leftCount > 260) {
+					leftCount = 260;
+				}
+				else {
+					mike.style.left = leftCount + 'px';
+				}
+			};
+
+			function moveDown() {
+				topCount += speed;
+				// animate();
+
+				// Stop at bottom border
+				if (topCount > 190) {
+					topCount = 190;
+				}
+				else {
+					mike.style.top = topCount + 'px';
+				}
+			};
+
+			function moveLeft() {
+				leftCount -= speed;
+				// animate();
+
+				// Stop at left border
+				if (leftCount < 0) {
+					leftCount = 0;
+				}
+				else {
+					mike.style.left = leftCount + 'px';
+				}
+			};
+
+			function moveUp() {
+				topCount -= speed;
+				// animate();
+
+				// Stop at top border
+				if (topCount < 0) {
+					topCount = 0;
+				}
+				else {
+					mike.style.top = topCount + 'px';
+				}
+			};
+
+			document.onkeydown = function(event) {
+
+			// Move right
+			if (event.keyCode === 39) {moveRight();}
+			// Move down
+			else if (event.keyCode === 40) {moveDown();}
+			// Move left
+			else if (event.keyCode === 37) {moveLeft();}
+			// Move up
+			else if (event.keyCode === 38) {moveUp();}
+			// Shoot continuous fireball
+			// else if (event.keyCode === 32) {shoot();}
+			};			
 
 
 		};
