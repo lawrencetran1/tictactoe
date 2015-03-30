@@ -106,20 +106,6 @@
 							];
 
 
-
-			// var foo = self.squares;
-			// var bar = [								// initialize grid to insert corresponding elements into their corresponding position
-			// 				[foo[0].player,  foo[1].player,  foo[2].player,  foo[3].player,  foo[4].player],	// index 0
-			// 				[foo[5].player,  foo[6].player,  foo[7].player,  foo[8].player,  foo[9].player],	// index 1
-			// 				[foo[10].player, foo[11].player, foo[12].player, foo[13].player, foo[14].player],	// index 2
-			// 				[foo[15].player, foo[16].player, foo[17].player, foo[18].player, foo[19].player],	// index 3
-			// 				[foo[20].player, foo[21].player, foo[22].player, foo[23].player, foo[24].player]	// index 4
-			// 			];	
-			// function update(grid, player) {
-			// 	bar[0][0] = 
-			// }
-
-
 			self.click = function($index) {
 				// console.log('p1 turn: ' + self.tracker.p1turn, ' p2 turn: ' + self.tracker.p2turn);
 
@@ -158,7 +144,6 @@
 					elementsCopy.push(ele);									// push the element into elementsCopy
 				});
 				var newGrid = [];											// initialize local empty array that will act as the updated grid
-
 				var combos = [];											// initialize empty array to house all the different combinations
 
 				for (var i = 0; i < self.select.length; i++) {				// loop through all grid sizes (3 total)
@@ -203,30 +188,32 @@
 					}
 				};
 
-				// Push all columns into combos array. Need to rotate newGrid array and use same for loop above to get combos for columns
-				var rotatedNewGrid = invertArray(newGrid, newGrid.length);
-				for (var i = 0; i < rotatedNewGrid.length; i++) {
-					for (var j = 0; j < rotatedNewGrid[i].length; j++) {
+				// // Push all columns into combos array. Need to rotate newGrid array and use same for loop above to get combos for columns
+				var rowToColumns = transformArray(newGrid, newGrid.length, 'rowToCol');
+				for (var i = 0; i < rowToColumns.length; i++) {
+					for (var j = 0; j < rowToColumns[i].length; j++) {
 						if (i == 0 && j == 0) {
-							combos.push(rotatedNewGrid[i].join(''));
+							combos.push(rowToColumns[i].join(''));
 						}
 						else if (i == 1 && j == 0) {
-							combos.push(rotatedNewGrid[i].join(''));
+							combos.push(rowToColumns[i].join(''));
 						}
 						else if (i == 2 && j == 0) {
-							combos.push(rotatedNewGrid[i].join(''));
+							combos.push(rowToColumns[i].join(''));
 						}
 						else if (i == 3 && j == 0) {
-							combos.push(rotatedNewGrid[i].join(''));
+							combos.push(rowToColumns[i].join(''));
 						}
 						else if (i == 4 && j == 0) {
-							combos.push(rotatedNewGrid[i].join(''));
+							combos.push(rowToColumns[i].join(''));
 						}
 					}
 				};
 
-				console.log(combos);	
-
+				// Push all diagonals into combos array.
+				var diagLeftToRight = transformArray(newGrid, newGrid.length, 'diagLeftToRight');
+				combos.push(diagLeftToRight.join(''));
+				console.log(combos);
 
 				// calculate winning combinations
 				// var row1 = newGrid[0][0] + newGrid[0][1] + newGrid[0][2] + newGrid[0][3] + newGrid[0][4];
@@ -314,18 +301,49 @@
 			
 			};
 
-			function invertArray(array, arrayLength) {
-				var newArray = [];
-				for (var i = 0; i < array.length; i++) {
-					newArray.push([]);
+			function transformArray(array, arrayLength, type) {
+				var newArray = [];										// initalize empty array
+				for (var i = 0; i < array.length; i++) {				// push in empty arrays into newArray.
+					newArray.push([]);									// # of empty arrays depend on length of original array
 				};
+
+				if (type === 'rowToCol') {								// 90 degree rotation will turn columns into rows and rows into columns
+					for (var i = 0; i < array.length; i++) {
+						for (var j = 0; j < array.length; j++) {
+							newArray[j].push(array[i][j]);
+						};
+					};					
+				}
+
+				else if (type === 'diagLeftToRight') {					
+					for (var i = 0; i < array.length; i++) {
+						for (var j = 0; j < array.length; j++) {
+							if (i == j) {
+								newArray[j].push(array[i][j]);
+							}
+						}
+					}
+				}
+
+				return newArray;
+			};		
+
+			function diagonalArray(array, arrayLength) {
+				var newArray = [];										// initalize empty array
+				for (var i = 0; i < array.length; i++) {				// push in empty arrays into newArray.
+					newArray.push([]);									// # of empty arrays depend on length of original array
+				};
+
 				for (var i = 0; i < array.length; i++) {
 					for (var j = 0; j < array.length; j++) {
-						newArray[j].push(array[i][j]);
-					};
-				};
+						if (i + j == 4) {
+							newArray[j].push(array[i][j]);
+						}
+					}
+				}				
+
 				return newArray;
-			};
+			};					
 
 			// Create function to check winner. If there is a winner, reset the grid
 			function getWinner() {
