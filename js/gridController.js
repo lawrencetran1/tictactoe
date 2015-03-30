@@ -189,7 +189,7 @@
 				};
 
 				// // Push all columns into combos array. Need to rotate newGrid array and use same for loop above to get combos for columns
-				var rowToColumns = transformArray(newGrid, newGrid.length, 'rowToCol');
+				var rowToColumns = transformArray(newGrid, newGrid.length, 'rotate90');
 				for (var i = 0; i < rowToColumns.length; i++) {
 					for (var j = 0; j < rowToColumns[i].length; j++) {
 						if (i == 0 && j == 0) {
@@ -213,6 +213,11 @@
 				// Push all diagonals into combos array.
 				var diagLeftToRight = transformArray(newGrid, newGrid.length, 'diagLeftToRight');
 				combos.push(diagLeftToRight.join(''));
+
+				var reversedGrid = newGrid.reverse();
+				var diagRightToLeft = transformArray(reversedGrid, reversedGrid.length, 'diagLeftToRight')
+				combos.push(diagRightToLeft.join(''));
+
 				console.log(combos);
 
 				// calculate winning combinations
@@ -307,7 +312,7 @@
 					newArray.push([]);									// # of empty arrays depend on length of original array
 				};
 
-				if (type === 'rowToCol') {								// 90 degree rotation will turn columns into rows and rows into columns
+				if (type === 'rotate90') {								// 90 degree rotation will turn columns into rows and rows into columns
 					for (var i = 0; i < array.length; i++) {
 						for (var j = 0; j < array.length; j++) {
 							newArray[j].push(array[i][j]);
@@ -360,10 +365,10 @@
 					$timeout(clearGrid, 1000);			// clear grid after 1 second
 				}
 
-				// else if (self.tracker.winner === null && self.counter == 9) {		// in there is no winner and counter is 9...
-				// 	self.tracker.tie = true;										// set tie to true to display Tie Game in div with ng-class
-				// 	$timeout(clearGrid, 1000);										// clear grid after 1 second
-				// }
+				else if (self.tracker.winner === null && self.counter == 9) {		// in there is no winner and counter is 9...
+					self.tracker.tie = true;										// set tie to true to display Tie Game in div with ng-class
+					$timeout(clearGrid, 1000);										// clear grid after 1 second
+				}
 
 			};
 
