@@ -220,60 +220,16 @@
 				combos.push(diagRightToLeft.join(''));
 
 				// gets inner diagonal of first quadrant
-				// var gridSmall1 = shrinkArray(newGrid, self.gridSize, 1);
-				// var innerDiag1 = transformArray(gridSmall1, gridSmall1.length, 'diagLeftToRight');
-				// combos.push(innerDiag1.join(''));
+				var gridSmall1 = shrinkArray(newGrid, self.gridSize, 1);
+				var innerDiag1 = transformArray(gridSmall1, gridSmall1.length, 'diagLeftToRight');
+				combos.push(innerDiag1.join(''));				
 
-				var quadrant1 = (function(){
-					var newGridCopy = [];
-					var newGridSmall = [];
-					for (var i = newGrid.length-1; i >= 0; i--) {
-						newGridCopy.push(newGrid[i]);
-					};
-					for (var i = 0; i < newGridCopy.length-1; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
-					}
-					return newGridSmall;
-				})();
+				// gets inner diagonal of second quadrant
+				var gridSmall2 = shrinkArray(newGrid, self.gridSize, 2).reverse();
+				var innerDiag2 = transformArray(gridSmall2, gridSmall2.length, 'diagLeftToRight');
+				combos.push(innerDiag2.join(''));
 
-				var quadrant2 = (function(){
-					var newGridCopy = [];
-					var newGridSmall = [];
-					for (var i = newGrid.length-1; i >= 0; i--) {
-						newGridCopy.push(newGrid[i]);
-					};
-					for (var i = 0; i < newGridCopy.length-1; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
-					}
-					return newGridSmall;
-				})();
-
-				var quadrant3 = (function(){
-					var newGridCopy = [];
-					var newGridSmall = [];
-					for (var i = newGrid.length-1; i >= 0; i--) {
-						newGridCopy.push(newGrid[i]);
-					};
-					for (var i = 1; i < newGridCopy.length; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
-					}
-					return newGridSmall;
-				})();
-
-				var quadrant4 = (function(){
-					var newGridCopy = [];
-					var newGridSmall = [];
-					for (var i = newGrid.length-1; i >= 0; i--) {
-						newGridCopy.push(newGrid[i]);
-					};
-					for (var i = 1; i < newGridCopy.length; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
-					}
-					return newGridSmall;
-				})();						
-
-				console.log(quadrant3);
-
+				console.log(innerDiag2)
 
 				// // Convert array into 3x3 matrix
 				self.grid[0][0] = self.elements[0];  // top row
@@ -338,28 +294,37 @@
 				return newArray;
 			};		
 
-			// function shrinkArray(array, sizeOfGrid, quadrant) {
-			// 	if (sizeOfGrid > 9) {
-			// 		var arrayCopy = [];										// initialize empty array to copy elements array
-			// 		for (var i = array.length-1; i >= 0; i--) {
-			// 			arrayCopy.push(array[i]);
-			// 		};
-			// 		if (quadrant == 1) {
-			// 			for (var i = 0; i < array.length; i++) {
-			// 				arrayCopy[i].shift();
-			// 			}
-			// 			arrayCopy.pop();
-			// 			return arrayCopy;
-			// 		}
-			// 		else if (quadrant == 2) {
-			// 			for (var i = 0; i < array.length; i++) {
-			// 				arrayCopy[i].pop();
-			// 			}
-			// 			arrayCopy.pop();
-			// 			return arrayCopy;
-			// 		}
-			// 	}
-			// };	
+			function shrinkArray(array, sizeOfGrid, quadrant) {
+				var newGridCopy = [];
+				var newGridSmall = [];
+				for (var i = array.length-1; i >= 0; i--) {
+					newGridCopy.push(array[i]);
+				};
+				if (quadrant == 1) {
+					for (var i = 0; i < newGridCopy.length-1; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
+					};
+					return newGridSmall;
+				}
+				else if (quadrant == 2) {
+					for (var i = 0; i < newGridCopy.length-1; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
+					};
+					return newGridSmall;
+				}
+				else if (quadrant == 3) {
+					for (var i = 1; i < newGridCopy.length; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
+					};
+					return newGridSmall;
+				}
+				else if (quadrant == 4) {
+					for (var i = 1; i < newGridCopy.length; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
+					};
+					return newGridSmall;
+				}
+			};	
 
 			// Create function to check winner. If there is a winner, reset the grid
 			function getWinner() {
