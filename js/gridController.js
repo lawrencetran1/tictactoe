@@ -107,7 +107,6 @@
 
 
 			self.click = function($index) {
-				// console.log('p1 turn: ' + self.tracker.p1turn, ' p2 turn: ' + self.tracker.p2turn);
 
 				var square = self.squares[$index];	// create square variable using $index to select it
 
@@ -132,7 +131,7 @@
 				self.counter++;  		// increment counter on each click, if counter == 9, then it's a tie game
 
 				tracker();				// call tracker function on each click to update grid on each click
-				// getWinner();			// call getWinner function on each click to check for winner on each click
+				getWinner();			// call getWinner function on each click to check for winner on each click
 
 			}
 
@@ -220,48 +219,78 @@
 				combos.push(diagRightToLeft.join(''));
 
 				// gets inner diagonal of first quadrant
-				var gridSmall1 = shrinkArray(newGrid, self.gridSize, 1);
-				var innerDiag1 = transformArray(gridSmall1, gridSmall1.length, 'diagLeftToRight');
-				combos.push(innerDiag1.join(''));				
+				// var gridSmall1 = shrinkArray(newGrid, self.gridSize, 1);
+				// var innerDiag1 = transformArray(gridSmall1, gridSmall1.length, 'diagLeftToRight');
+				// combos.push(innerDiag1.join(''));				
 
-				// gets inner diagonal of second quadrant
-				var gridSmall2 = shrinkArray(newGrid, self.gridSize, 2).reverse();
-				var innerDiag2 = transformArray(gridSmall2, gridSmall2.length, 'diagLeftToRight');
-				combos.push(innerDiag2.join(''));
+				// // gets inner diagonal of second quadrant
+				// var gridSmall2 = shrinkArray(newGrid, self.gridSize, 2).reverse();
+				// var innerDiag2 = transformArray(gridSmall2, gridSmall2.length, 'diagLeftToRight');
+				// combos.push(innerDiag2.join(''));
 
-				console.log(innerDiag2)
+				// // gets inner diagonal of third quadrant
+				// var gridSmall3 = shrinkArray(newGrid, self.gridSize, 3);
+				// var innerDiag3 = transformArray(gridSmall3, gridSmall3.length, 'diagLeftToRight');
+				// combos.push(innerDiag3.join(''));
+
+				// // gets inner diagonal of fourth quadrant
+				// var gridSmall4 = shrinkArray(newGrid, self.gridSize, 4).reverse();
+				// var innerDiag4 = transformArray(gridSmall4, gridSmall4.length, 'diagLeftToRight');
+				// combos.push(innerDiag4.join(''));
+
+				for (var i = 0; i < combos.length; i++) {
+					console.log(combos[i], self.gridSize)
+				}
 
 				// // Convert array into 3x3 matrix
-				self.grid[0][0] = self.elements[0];  // top row
-				self.grid[0][1] = self.elements[1];  // top row
-				self.grid[0][2] = self.elements[2];  // top row
-				self.grid[1][0] = self.elements[3];  // middle row
-				self.grid[1][1] = self.elements[4];  // middle row
-				self.grid[1][2] = self.elements[5];  // middle row
-				self.grid[2][0] = self.elements[6];  // bottom row
-				self.grid[2][1] = self.elements[7];  // bottom row
-				self.grid[2][2] = self.elements[8];  // bottom row
+				// self.grid[0][0] = self.elements[0];  // top row
+				// self.grid[0][1] = self.elements[1];  // top row
+				// self.grid[0][2] = self.elements[2];  // top row
+				// self.grid[1][0] = self.elements[3];  // middle row
+				// self.grid[1][1] = self.elements[4];  // middle row
+				// self.grid[1][2] = self.elements[5];  // middle row
+				// self.grid[2][0] = self.elements[6];  // bottom row
+				// self.grid[2][1] = self.elements[7];  // bottom row
+				// self.grid[2][2] = self.elements[8];  // bottom row
 
-				// // Parse result of grid into a string
-				var topRow 	       = self.grid[0].join('');
-				var middleRow      = self.grid[1].join('');
-				var bottomRow      = self.grid[2].join('');
-				var leftCol        = self.grid[0][0] + self.grid[1][0] + self.grid[2][0];
-				var middleCol      = self.grid[0][1] + self.grid[1][1] + self.grid[2][1];
-				var rightCol       = self.grid[0][2] + self.grid[1][2] + self.grid[2][2];
-				var diagTopLeft    = self.grid[0][0] + self.grid[1][1] + self.grid[2][2];
-				var diagTopRight   = self.grid[0][2] + self.grid[1][1] + self.grid[2][0];
+				// // // Parse result of grid into a string
+				// var topRow 	       = self.grid[0].join('');
+				// var middleRow      = self.grid[1].join('');
+				// var bottomRow      = self.grid[2].join('');
+				// var leftCol        = self.grid[0][0] + self.grid[1][0] + self.grid[2][0];
+				// var middleCol      = self.grid[0][1] + self.grid[1][1] + self.grid[2][1];
+				// var rightCol       = self.grid[0][2] + self.grid[1][2] + self.grid[2][2];
+				// var diagTopLeft    = self.grid[0][0] + self.grid[1][1] + self.grid[2][2];
+				// var diagTopRight   = self.grid[0][2] + self.grid[1][1] + self.grid[2][0];
 
-				// // Insert each result into an array
-				var combinations = [topRow, middleRow, bottomRow, leftCol, middleCol, rightCol, diagTopLeft, diagTopRight];
+				// // // Insert each result into an array
+				// var combinations = [topRow, middleRow, bottomRow, leftCol, middleCol, rightCol, diagTopLeft, diagTopRight];
 
 				// Loop through combinations to check if O or X won and set winMsg accordingly
-				for (var i = 0; i < combinations.length; i++) {
-					if (combinations[i] === 'XXX') {
-						self.tracker.winner = 1;
+				for (var i = 0; i < combos.length; i++) {
+					if (self.gridSize == 9) {
+						if (combos[i] === 'XXX') {
+							self.tracker.winner = 1;
+						}
+						else if (combos[i] === 'OOO') {
+							self.tracker.winner = 2;
+						}
 					}
-					else if (combinations[i] === 'OOO') {
-						self.tracker.winner = 2;
+					else if (self.gridSize == 16) {
+						if (combos[i] === 'XXXX') {
+							self.tracker.winner = 1;
+						}
+						else if (combos[i] === 'OOOO') {
+							self.tracker.winner = 2;
+						}
+					}
+					else if (self.gridSize == 25) {
+						if (combos[i] === 'XXXXX') {
+							self.tracker.winner = 1;
+						}
+						else if (combos[i] === 'OOOOO') {
+							self.tracker.winner = 2;
+						}
 					}
 				};				
 			
@@ -341,11 +370,18 @@
 					$timeout(clearGrid, 1000);			// clear grid after 1 second
 				}
 
-				else if (self.tracker.winner === null && self.counter == 9) {		// in there is no winner and counter is 9...
-					self.tracker.tie = true;										// set tie to true to display Tie Game in div with ng-class
-					$timeout(clearGrid, 1000);										// clear grid after 1 second
+				else if (self.tracker.winner === null && self.gridSize == 9 && self.counter == 9) {
+					self.tracker.tie = true;
+					$timeout(clearGrid, 1000);
 				}
-
+				else if (self.tracker.winner === null && self.gridSize == 16 && self.counter == 16) {
+					self.tracker.tie = true;
+					$timeout(clearGrid, 1000);
+				}
+				else if (self.tracker.winner === null && self.gridSize == 25 && self.counter == 25) {
+					self.tracker.tie = true;
+					$timeout(clearGrid, 1000);
+				}
 			};
 
 
