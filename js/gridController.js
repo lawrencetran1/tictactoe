@@ -214,60 +214,65 @@
 				var diagLeftToRight = transformArray(newGrid, newGrid.length, 'diagLeftToRight');
 				combos.push(diagLeftToRight.join(''));
 
+				// reverses grid to get other diagonal
 				var reversedGrid = newGrid.reverse();
 				var diagRightToLeft = transformArray(reversedGrid, reversedGrid.length, 'diagLeftToRight')
 				combos.push(diagRightToLeft.join(''));
 
-				console.log(combos);
+				// gets inner diagonal of first quadrant
+				// var gridSmall1 = shrinkArray(newGrid, self.gridSize, 1);
+				// var innerDiag1 = transformArray(gridSmall1, gridSmall1.length, 'diagLeftToRight');
+				// combos.push(innerDiag1.join(''));
 
-				// calculate winning combinations
-				// var row1 = newGrid[0][0] + newGrid[0][1] + newGrid[0][2] + newGrid[0][3] + newGrid[0][4];
-				// var row2 = newGrid[1][0] + newGrid[1][1] + newGrid[1][2] + newGrid[1][3] + newGrid[1][4];
-				// var row3 = newGrid[2][0] + newGrid[2][1] + newGrid[2][2] + newGrid[2][3] + newGrid[2][4];
-				// var row4 = newGrid[3][0] + newGrid[3][1] + newGrid[3][2] + newGrid[3][3] + newGrid[3][4];
-				// var row5 = newGrid[4][0] + newGrid[4][1] + newGrid[4][2] + newGrid[4][3] + newGrid[4][4];
-				// var col1 = newGrid[0][0] + newGrid[1][0] + newGrid[2][0] + newGrid[3][0] + newGrid[4][0];
-				// var col2 = newGrid[0][1] + newGrid[1][1] + newGrid[2][1] + newGrid[3][1] + newGrid[4][1];
-				// var col3 = newGrid[0][2] + newGrid[1][2] + newGrid[2][2] + newGrid[3][2] + newGrid[4][2];
-				// var col4 = newGrid[0][3] + newGrid[1][3] + newGrid[2][3] + newGrid[3][3] + newGrid[4][3];
-				// var col5 = newGrid[0][4] + newGrid[1][4] + newGrid[2][4] + newGrid[3][4] + newGrid[4][4];
-				// var diag1 = newGrid[2][0] + newGrid[3][1] + newGrid[4][2];
-				// var diag2 = newGrid[1][0] + newGrid[2][1] + newGrid[3][2] + newGrid[4][3];
-				// var diag3 = newGrid[0][0] + newGrid[1][1] + newGrid[2][2] + newGrid[3][3] + newGrid[4][4];
-				// var diag4 = newGrid[0][1] + newGrid[1][2] + newGrid[2][3] + newGrid[3][4];
-				// var diag5 = newGrid[0][2] + newGrid[1][3] + newGrid[2][4];
-				// var diag6 = newGrid[2][0] + newGrid[1][1] + newGrid[0][2];
-				// var diag7 = newGrid[3][0] + newGrid[2][1] + newGrid[1][2] + newGrid[0][3];
-				// var diag8 = newGrid[4][0] + newGrid[3][1] + newGrid[2][2] + newGrid[1][3] + newGrid[0][4];
-				// var diag9 = newGrid[4][1] + newGrid[3][2] + newGrid[2][3] + newGrid[1][4];
-				// var diag10 = newGrid[4][2] + newGrid[3][3] + newGrid[2][4];
+				var quadrant1 = (function(){
+					var newGridCopy = [];
+					var newGridSmall = [];
+					for (var i = newGrid.length-1; i >= 0; i--) {
+						newGridCopy.push(newGrid[i]);
+					};
+					for (var i = 0; i < newGridCopy.length-1; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
+					}
+					return newGridSmall;
+				})();
 
-				// var combos = [row1, row2, row3, row4, row5, col1, col2, col3, col4, col5, diag1, diag2, diag3, diag4, diag5, diag6, diag7, diag8, diag9, diag10];
+				var quadrant2 = (function(){
+					var newGridCopy = [];
+					var newGridSmall = [];
+					for (var i = newGrid.length-1; i >= 0; i--) {
+						newGridCopy.push(newGrid[i]);
+					};
+					for (var i = 0; i < newGridCopy.length-1; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
+					}
+					return newGridSmall;
+				})();
 
-				// console.log(row1);
+				var quadrant3 = (function(){
+					var newGridCopy = [];
+					var newGridSmall = [];
+					for (var i = newGrid.length-1; i >= 0; i--) {
+						newGridCopy.push(newGrid[i]);
+					};
+					for (var i = 1; i < newGridCopy.length; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
+					}
+					return newGridSmall;
+				})();
 
-				// for (var i = 0; i < combos.length; i++) {
-				// 	var combo = combos[i].split('');
-				// 	for (var j = 0; j < combo.length; j++) {
-				// 		if (combo[j] + combo[j+1] + combo[j+2] === 'XXX') {
-				// 			console.log('X WINS');
-				// 		}
-				// 	}
-				// }
+				var quadrant4 = (function(){
+					var newGridCopy = [];
+					var newGridSmall = [];
+					for (var i = newGrid.length-1; i >= 0; i--) {
+						newGridCopy.push(newGrid[i]);
+					};
+					for (var i = 1; i < newGridCopy.length; i++) {
+						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
+					}
+					return newGridSmall;
+				})();						
 
-				// for (var i = 0; i < combos.length; i++) {
-				// 	var XXX = combos[i].split('').filter(filterX).join('');
-				// 	var OOO = combos[i].split('').filter(filterO).join('');
-				// 	console.log(XXX, OOO);
-				// 	if (XXX === 'XXX') {
-				// 		console.log('X WINS');
-				// 		self.tracker.winner = 1;
-				// 	}
-				// 	else if (OOO === 'OOO') {
-				// 		console.log('O WINS');
-				// 		self.tracker.winner = 2;
-				// 	}
-				// }
+				console.log(quadrant3);
 
 
 				// // Convert array into 3x3 matrix
@@ -320,7 +325,7 @@
 					};					
 				}
 
-				else if (type === 'diagLeftToRight') {					
+				else if (type === 'diagLeftToRight') {					// pushes diagonal top left to bottom right into newArray
 					for (var i = 0; i < array.length; i++) {
 						for (var j = 0; j < array.length; j++) {
 							if (i == j) {
@@ -333,22 +338,28 @@
 				return newArray;
 			};		
 
-			function diagonalArray(array, arrayLength) {
-				var newArray = [];										// initalize empty array
-				for (var i = 0; i < array.length; i++) {				// push in empty arrays into newArray.
-					newArray.push([]);									// # of empty arrays depend on length of original array
-				};
-
-				for (var i = 0; i < array.length; i++) {
-					for (var j = 0; j < array.length; j++) {
-						if (i + j == 4) {
-							newArray[j].push(array[i][j]);
-						}
-					}
-				}				
-
-				return newArray;
-			};					
+			// function shrinkArray(array, sizeOfGrid, quadrant) {
+			// 	if (sizeOfGrid > 9) {
+			// 		var arrayCopy = [];										// initialize empty array to copy elements array
+			// 		for (var i = array.length-1; i >= 0; i--) {
+			// 			arrayCopy.push(array[i]);
+			// 		};
+			// 		if (quadrant == 1) {
+			// 			for (var i = 0; i < array.length; i++) {
+			// 				arrayCopy[i].shift();
+			// 			}
+			// 			arrayCopy.pop();
+			// 			return arrayCopy;
+			// 		}
+			// 		else if (quadrant == 2) {
+			// 			for (var i = 0; i < array.length; i++) {
+			// 				arrayCopy[i].pop();
+			// 			}
+			// 			arrayCopy.pop();
+			// 			return arrayCopy;
+			// 		}
+			// 	}
+			// };	
 
 			// Create function to check winner. If there is a winner, reset the grid
 			function getWinner() {
