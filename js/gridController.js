@@ -17,23 +17,23 @@
 		.module('myApp')
 		.controller('GridController', GridController);
 
-		function GridController($timeout) {  // pass $timeout service in order to delay clearGrid function
+		function GridController($timeout) {  				// pass $timeout service in order to delay clearGrid function
 
-			var self = this;	// capture variable
+			var self = this;													// capture variable
 
 			self.select = [
-				{id: '3x3 Grid', active: true},		// initialize grid sizes, 3x3 is default
+				{id: '3x3 Grid', active: true},					// initialize grid sizes, 3x3 is default
 				{id: '4x4 Grid', active: false},
 				{id: '5x5 Grid', active: false}
 			];
 
-			self.gridSize = 9;						// track current grid size by counting number of squares
+			self.gridSize = 9;												// track current grid size by counting number of squares
 
-			self.changeGrid = function(num) {		// use parameter passed from ng-click
-				clearGrid();						// clear grid each time grid is changed			
-				self.gridSize = num;				// set grid size to number of squares passed from ng-click parameter
+			self.changeGrid = function(num) {					// use parameter passed from ng-click
+				clearGrid();														// clear grid each time grid is changed			
+				self.gridSize = num;										// set grid size to number of squares passed from ng-click parameter
 				if (num == 9) {
-					self.select[0].active = true;	// set grid active state to true to use ng-class to change square sizes	
+					self.select[0].active = true;					// set grid active state to true to use ng-class to change square sizes	
 					self.select[1].active = false;
 					self.select[2].active = false;
 				}
@@ -60,21 +60,9 @@
 				winner: null  	// intialize winner variable to be able to clear grid once game is over
 			};
 
-			self.roundZero = false;
-
 			// initalize elements array to insert move in proper index
 			self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
-		
-			self.grid = [								// initialize grid to insert corresponding elements into their corresponding position
-							[null,null,null,null,null],
-							[null,null,null,null,null],
-							[null,null,null,null,null],
-							[null,null,null,null,null],
-							[null,null,null,null,null]
-						];
-
 			self.counter = 0;	// when counter hits 9 and there is no winner, then it is a tie game
-
 			self.turn = 1;		// Player 1 turn is 1 and Player 2 turn is 2
 
 			self.squares = [
@@ -107,59 +95,54 @@
 
 
 			self.click = function($index) {
+				var square = self.squares[$index];				// create square variable using $index to select it
+				if (square.used) return;  								// check if the square is used, if true...exit function
+				square.used = true;  											// when square is clicked, change used property to true, and set player property to 'x' or 'o'
 
-				var square = self.squares[$index];	// create square variable using $index to select it
-
-				if (square.used) return;  // check if the square is used, if true...exit function
-
-				square.used = true;  // when square is clicked, change used property to true, and set player property to 'x' or 'o'
-
-				if (self.tracker.p1turn) {				// if player 1's turn is true
-					square.player = 'X';				// set square's player property to 'X' -> bind to html
-					self.elements.splice($index, 1, 'X');	// remove null from square's index and insert 'X'
-					self.tracker.p1turn = false;		// set player 1 turn to false
-					self.tracker.p2turn = true;			// set player 2 turn to true
+				if (self.tracker.p1turn) {								// if player 1's turn is true
+					square.player = 'X';										// set square's player property to 'X' -> bind to html
+					self.elements.splice($index, 1, 'X');		// remove null from square's index and insert 'X'
+					self.tracker.p1turn = false;						// set player 1 turn to false
+					self.tracker.p2turn = true;							// set player 2 turn to true
 				}
 
-				else if (self.tracker.p2turn) {			// if player 2's turn is true
-					square.player = 'O';				// set square's player property to 'O' -> bind to html
-					self.elements.splice($index, 1, 'O');	// remove null from square's index and insert 'O'
-					self.tracker.p2turn = false;		// set player 2 turn to false
-					self.tracker.p1turn = true;			// set player 1 turn to true
+				else if (self.tracker.p2turn) {						// if player 2's turn is true
+					square.player = 'O';										// set square's player property to 'O' -> bind to html
+					self.elements.splice($index, 1, 'O');		// remove null from square's index and insert 'O'
+					self.tracker.p2turn = false;						// set player 2 turn to false
+					self.tracker.p1turn = true;							// set player 1 turn to true
 				}
 
-				self.counter++;  		// increment counter on each click, if counter == 9, then it's a tie game
-
-				tracker();				// call tracker function on each click to update grid on each click
-				getWinner();			// call getWinner function on each click to check for winner on each click
-
+				self.counter++;  													// increment counter on each click, if counter == 9, then it's a tie game
+				tracker();																// call tracker function on each click to update grid on each click
+				getWinner();															// call getWinner function on each click to check for winner on each click
 			}
 
 			// Create function that shows current state of the grid when click() is called
 			function tracker() {
 
-				var elementsCopy = [];										// initialize local empty array each time function is called
-				self.elements.forEach(function(ele) {						// for each element of the self.elements array
-					elementsCopy.push(ele);									// push the element into elementsCopy
+				var elementsCopy = [];																// initialize local empty array each time function is called
+				self.elements.forEach(function(ele) {									// for each element of the self.elements array
+					elementsCopy.push(ele);															// push the element into elementsCopy
 				});
-				var newGrid = [];											// initialize local empty array that will act as the updated grid
-				var combos = [];											// initialize empty array to house all the different combinations
+				var newGrid = [];																			// initialize local empty array that will act as the updated grid
+				var combos = [];																			// initialize empty array to house all the different combinations
 
 				for (var i = 0; i < self.select.length; i++) {				// loop through all grid sizes (3 total)
-					if (self.select[i].active === true) {					// make sure to only select active grid
-						if (self.select[i].id === '3x3 Grid') {				// identify grid id: '3x3 Grid' 
-							while(elementsCopy.length - 16) {				// Acts as a counter for 3x3 Grid, intial value is 9
-								newGrid.push(elementsCopy.splice(0,3));	// remove 3 elements at a time which decreases count at same rate
-							}												// and pushes 3 elements at a time into newGrid, while loop exits when count hits zero
+					if (self.select[i].active === true) {								// make sure to only select active grid
+						if (self.select[i].id === '3x3 Grid') {						// identify grid id: '3x3 Grid' 
+							while(elementsCopy.length - 16) {								// Acts as a counter for 3x3 Grid, intial value is 9
+								newGrid.push(elementsCopy.splice(0,3));				// remove 3 elements at a time which decreases count at same rate
+							}																								// and pushes 3 elements at a time into newGrid, while loop exits when count hits zero
 						}
-						else if (self.select[i].id === '4x4 Grid') {		// identify grid id: '4x4 Grid'
-							while(elementsCopy.length - 9) {				// Acts as a counter for 4x4 Grid, intial value is 16
-								newGrid.push(elementsCopy.splice(0,4));	// remove 4 elements at a time which decreases count at same rate
-							}												// and pushes 4 elements at a time into newGrid, while loop exits when count hits zero
+						else if (self.select[i].id === '4x4 Grid') {			// identify grid id: '4x4 Grid'
+							while(elementsCopy.length - 9) {								// Acts as a counter for 4x4 Grid, intial value is 16
+								newGrid.push(elementsCopy.splice(0,4));				// remove 4 elements at a time which decreases count at same rate
+							}																								// and pushes 4 elements at a time into newGrid, while loop exits when count hits zero
 						}
-						else if (self.select[i].id === '5x5 Grid') {		// identify grid id: '5x5 Grid'
-							while(elementsCopy.length) {					// acts as a counter for 5x5 Grid, initial value is 25
-								newGrid.push(elementsCopy.splice(0,5));	// and pushes 5 elements at a time into newGrid, while loop exits when count hits zero
+						else if (self.select[i].id === '5x5 Grid') {			// identify grid id: '5x5 Grid'
+							while(elementsCopy.length) {										// acts as a counter for 5x5 Grid, initial value is 25
+								newGrid.push(elementsCopy.splice(0,5));				// and pushes 5 elements at a time into newGrid, while loop exits when count hits zero
 							}
 						}						
 					}
@@ -218,54 +201,6 @@
 				var diagRightToLeft = transformArray(reversedGrid, reversedGrid.length, 'diagLeftToRight')
 				combos.push(diagRightToLeft.join(''));
 
-				// gets inner diagonal of first quadrant
-				// var gridSmall1 = shrinkArray(newGrid, self.gridSize, 1);
-				// var innerDiag1 = transformArray(gridSmall1, gridSmall1.length, 'diagLeftToRight');
-				// combos.push(innerDiag1.join(''));				
-
-				// // gets inner diagonal of second quadrant
-				// var gridSmall2 = shrinkArray(newGrid, self.gridSize, 2).reverse();
-				// var innerDiag2 = transformArray(gridSmall2, gridSmall2.length, 'diagLeftToRight');
-				// combos.push(innerDiag2.join(''));
-
-				// // gets inner diagonal of third quadrant
-				// var gridSmall3 = shrinkArray(newGrid, self.gridSize, 3);
-				// var innerDiag3 = transformArray(gridSmall3, gridSmall3.length, 'diagLeftToRight');
-				// combos.push(innerDiag3.join(''));
-
-				// // gets inner diagonal of fourth quadrant
-				// var gridSmall4 = shrinkArray(newGrid, self.gridSize, 4).reverse();
-				// var innerDiag4 = transformArray(gridSmall4, gridSmall4.length, 'diagLeftToRight');
-				// combos.push(innerDiag4.join(''));
-
-				for (var i = 0; i < combos.length; i++) {
-					console.log(combos[i], self.gridSize)
-				}
-
-				// // Convert array into 3x3 matrix
-				// self.grid[0][0] = self.elements[0];  // top row
-				// self.grid[0][1] = self.elements[1];  // top row
-				// self.grid[0][2] = self.elements[2];  // top row
-				// self.grid[1][0] = self.elements[3];  // middle row
-				// self.grid[1][1] = self.elements[4];  // middle row
-				// self.grid[1][2] = self.elements[5];  // middle row
-				// self.grid[2][0] = self.elements[6];  // bottom row
-				// self.grid[2][1] = self.elements[7];  // bottom row
-				// self.grid[2][2] = self.elements[8];  // bottom row
-
-				// // // Parse result of grid into a string
-				// var topRow 	       = self.grid[0].join('');
-				// var middleRow      = self.grid[1].join('');
-				// var bottomRow      = self.grid[2].join('');
-				// var leftCol        = self.grid[0][0] + self.grid[1][0] + self.grid[2][0];
-				// var middleCol      = self.grid[0][1] + self.grid[1][1] + self.grid[2][1];
-				// var rightCol       = self.grid[0][2] + self.grid[1][2] + self.grid[2][2];
-				// var diagTopLeft    = self.grid[0][0] + self.grid[1][1] + self.grid[2][2];
-				// var diagTopRight   = self.grid[0][2] + self.grid[1][1] + self.grid[2][0];
-
-				// // // Insert each result into an array
-				// var combinations = [topRow, middleRow, bottomRow, leftCol, middleCol, rightCol, diagTopLeft, diagTopRight];
-
 				// Loop through combinations to check if O or X won and set winMsg accordingly
 				for (var i = 0; i < combos.length; i++) {
 					if (self.gridSize == 9) {
@@ -297,12 +232,12 @@
 			};
 
 			function transformArray(array, arrayLength, type) {
-				var newArray = [];										// initalize empty array
+				var newArray = [];															// initalize empty array
 				for (var i = 0; i < array.length; i++) {				// push in empty arrays into newArray.
-					newArray.push([]);									// # of empty arrays depend on length of original array
+					newArray.push([]);														// # of empty arrays depend on length of original array
 				};
 
-				if (type === 'rotate90') {								// 90 degree rotation will turn columns into rows and rows into columns
+				if (type === 'rotate90') {											// 90 degree rotation will turn columns into rows and rows into columns
 					for (var i = 0; i < array.length; i++) {
 						for (var j = 0; j < array.length; j++) {
 							newArray[j].push(array[i][j]);
@@ -323,51 +258,19 @@
 				return newArray;
 			};		
 
-			function shrinkArray(array, sizeOfGrid, quadrant) {
-				var newGridCopy = [];
-				var newGridSmall = [];
-				for (var i = array.length-1; i >= 0; i--) {
-					newGridCopy.push(array[i]);
-				};
-				if (quadrant == 1) {
-					for (var i = 0; i < newGridCopy.length-1; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
-					};
-					return newGridSmall;
-				}
-				else if (quadrant == 2) {
-					for (var i = 0; i < newGridCopy.length-1; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
-					};
-					return newGridSmall;
-				}
-				else if (quadrant == 3) {
-					for (var i = 1; i < newGridCopy.length; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(0,newGridCopy.length-1).split(''))
-					};
-					return newGridSmall;
-				}
-				else if (quadrant == 4) {
-					for (var i = 1; i < newGridCopy.length; i++) {
-						newGridSmall.push(newGridCopy[i].join('').slice(1,newGridCopy.length).split(''))
-					};
-					return newGridSmall;
-				}
-			};	
-
 			// Create function to check winner. If there is a winner, reset the grid
 			function getWinner() {
 
-				if (self.tracker.winner == 1) {			// if player 1 wins...
-					self.tracker.p1score++;				// increment score for player 1
-					self.tracker.p1wins = true;			// set p1wins to true to display Player 1 Wins in div with ng-class
-					$timeout(clearGrid, 1000);			// clear grid after 1 second
+				if (self.tracker.winner == 1) {				// if player 1 wins...
+					self.tracker.p1score++;							// increment score for player 1
+					self.tracker.p1wins = true;					// set p1wins to true to display Player 1 Wins in div with ng-class
+					$timeout(clearGrid, 1000);					// clear grid after 1 second
 				}
 
 				else if (self.tracker.winner == 2) {	// if player 2 wins...
-					self.tracker.p2score++;				// increment score for player 2
-					self.tracker.p2wins = true;			// set p2wins to true to display Player 2 Wins in div with ng-class
-					$timeout(clearGrid, 1000);			// clear grid after 1 second
+					self.tracker.p2score++;							// increment score for player 2
+					self.tracker.p2wins = true;					// set p2wins to true to display Player 2 Wins in div with ng-class
+					$timeout(clearGrid, 1000);					// clear grid after 1 second
 				}
 
 				else if (self.tracker.winner === null && self.gridSize == 9 && self.counter == 9) {
@@ -397,18 +300,11 @@
 				});
 				self.counter = 0;
 				self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
-				self.grid = [
-							[null,null,null,null,null],
-							[null,null,null,null,null],
-							[null,null,null,null,null],
-							[null,null,null,null,null],
-							[null,null,null,null,null]
-						];
 			};
 
 			var speed = 10;
-  			var topCount = 0;
-  			var leftCount = 0;
+  		var topCount = 0;
+  		var leftCount = 0;
 			var mike = document.getElementById('mike');
 			function moveRight() {
 				leftCount += speed;
