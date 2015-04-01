@@ -283,19 +283,19 @@
 
 			var speed = 10;
   		var topCount = 0;
-  		var leftCount = 0;
-			var mike = document.getElementById('mike');
-			function moveRight() {
-				leftCount += speed;
-				// animate();
-				// Stop at right border
-				if (leftCount > 260) {
-					leftCount = 260;
-				}
-				else {
-					mike.style.left = leftCount + 'px';
-				}
-			};
+  		// var leftCount = 0;
+			var don = document.getElementById('don');
+			// function moveRight() {
+			// 	leftCount += speed;
+			// 	// animate();
+			// 	// Stop at right border
+			// 	if (leftCount > 260) {
+			// 		leftCount = 260;
+			// 	}
+			// 	else {
+			// 		don.style.left = leftCount + 'px';
+			// 	}
+			// };
 
 			function moveDown() {
 				topCount += speed;
@@ -306,22 +306,22 @@
 					topCount = 190;
 				}
 				else {
-					mike.style.top = topCount + 'px';
+					don.style.top = topCount + 'px';
 				}
 			};
 
-			function moveLeft() {
-				leftCount -= speed;
-				// animate();
+			// function moveLeft() {
+			// 	leftCount -= speed;
+			// 	// animate();
 
-				// Stop at left border
-				if (leftCount < 0) {
-					leftCount = 0;
-				}
-				else {
-					mike.style.left = leftCount + 'px';
-				}
-			};
+			// 	// Stop at left border
+			// 	if (leftCount < 0) {
+			// 		leftCount = 0;
+			// 	}
+			// 	else {
+			// 		don.style.left = leftCount + 'px';
+			// 	}
+			// };
 
 			function moveUp() {
 				topCount -= speed;
@@ -332,18 +332,18 @@
 					topCount = 0;
 				}
 				else {
-					mike.style.top = topCount + 'px';
+					don.style.top = topCount + 'px';
 				}
 			};
 
 			document.onkeydown = function(event) {
 
 			// Move right
-			if (event.keyCode === 39) {moveRight();}
+			// if (event.keyCode === 39) {moveRight();}
 			// Move down
-			else if (event.keyCode === 40) {moveDown();}
+			if (event.keyCode === 40) {moveDown();}
 			// Move left
-			else if (event.keyCode === 37) {moveLeft();}
+			// else if (event.keyCode === 37) {moveLeft();}
 			// Move up
 			else if (event.keyCode === 38) {moveUp();}
 			// Shoot continuous fireball

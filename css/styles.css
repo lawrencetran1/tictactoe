@@ -174,20 +174,31 @@ h4 {
 }
 
 .ninja-turtle {
-	width: 40px;
-	height: 40px;
+	/*width: 40px;*/
+	/*height: 40px;*/
 	position: relative;
-	background-color: black;
+/*	background-color: black;*/
 	margin: 0;
 }
 
-/*#rafael {
+#rafael {
 	background-image: url(../images/ninjaturtles.png);
-	background-position: 0 -50px;
-	width: 50px;
+	background-position: -279px -372px;
+	background-size: 275%;
+	width: 64px;
 	height: 50px;
 	margin: 0;
-}*/
+	float: right;
+}
+
+#don {
+	background-image: url(../images/ninjaturtles.png);
+	background-position: -372px -372px;
+	background-size: 275%;
+	width: 64px;
+	height: 50px;
+	margin: 0;
+}
 
 /*Splash screen styles
 ================================*/
