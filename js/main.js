@@ -1,6 +1,6 @@
 // IIFE
 (function(){
 
-	angular.module('myApp', []);
+	angular.module('myApp', ['firebase']);
 
 })();

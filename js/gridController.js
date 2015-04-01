@@ -17,103 +17,76 @@
 		.module('myApp')
 		.controller('GridController', GridController);
 
-		function GridController($timeout) {  				// pass $timeout service in order to delay clearGrid function
+		GridController.$inject = ['$firebaseArray', '$firebaseObject', '$timeout'];		
+
+		function GridController($firebaseArray, $firebaseObject, $timeout) {  				// pass $timeout service in order to delay clearGrid function
 
 			var self = this;													// capture variable
 
-			self.select = [
-				{id: '3x3 Grid', active: true},					// initialize grid sizes, 3x3 is default
-				{id: '4x4 Grid', active: false},
-				{id: '5x5 Grid', active: false}
-			];
-
-			self.gridSize = 9;												// track current grid size by counting number of squares
+			self.squares = getSquares();							// retrieve array of squares from firebase
+			self.tictactoe = getGame();								// retrieve tictactoe object from firebase
 
 			self.changeGrid = function(num) {					// use parameter passed from ng-click
-				clearGrid();														// clear grid each time grid is changed			
+				self.clearGrid();												// clear grid each time grid is changed			
 				self.gridSize = num;										// set grid size to number of squares passed from ng-click parameter
 				if (num == 9) {
-					self.select[0].active = true;					// set grid active state to true to use ng-class to change square sizes	
-					self.select[1].active = false;
-					self.select[2].active = false;
+					self.tictactoe.gridx3 = true;
+					self.tictactoe.gridx4 = false;
+					self.tictactoe.gridx5 = false;
+					self.tictactoe.gridSize = 9;
 				}
 				else if (num == 16) {
-					self.select[1].active = true;
-					self.select[0].active = false;
-					self.select[2].active = false;
+					self.tictactoe.gridx4 = true;
+					self.tictactoe.gridx5 = false;
+					self.tictactoe.gridx3 = false;
+					self.tictactoe.gridSize = 16;
 				}
 				else if (num == 25) {
-					self.select[2].active = true;
-					self.select[0].active = false;
-					self.select[1].active = false;
+					self.tictactoe.gridx5 = true;
+					self.tictactoe.gridx4 = false;
+					self.tictactoe.gridx3 = false;
+					self.tictactoe.gridSize = 25;
 				}
-			};
-
-			self.tracker = {
-				p1turn: true, 	// initialize p1turn variable to check whose turn it is
-				p2turn: false,	// initialize p2turn variable to check whose turn it is
-				p1wins: null, 	// initialize p1wins variable to display flash screen when true
-				p2wins: null, 	// initialize p2wins variable to display flash screen when true
-				tie: null, 	  	// initialize tie variable to display flash screen when true
-				p1score: 0,   	// initialize p1score variable to track p1 score -> bind to html
-				p2score: 0,   	// initialize p2score variable to track p2 score -> bind to html
-				winner: null  	// intialize winner variable to be able to clear grid once game is over
+				self.tictactoe.$save()
 			};
 
 			// initalize elements array to insert move in proper index
 			self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
-			self.counter = 0;	// when counter hits 9 and there is no winner, then it is a tie game
-			self.turn = 1;		// Player 1 turn is 1 and Player 2 turn is 2
+			self.tictactoe.counter = 0;		// when counter hits 9 and there is no winner, then it is a tie game
 
-			self.squares = [
-								{id: 'square1', used: false, player: null},
-								{id: 'square2', used: false, player: null},
-								{id: 'square3', used: false, player: null},
-								{id: 'square4', used: false, player: null},
-								{id: 'square5', used: false, player: null},
-								{id: 'square6', used: false, player: null},
-								{id: 'square7', used: false, player: null},
-								{id: 'square8', used: false, player: null},
-								{id: 'square9', used: false, player: null},
-								{id: 'square10', used: false, player: null},
-								{id: 'square11', used: false, player: null},
-								{id: 'square12', used: false, player: null},
-								{id: 'square13', used: false, player: null},
-								{id: 'square14', used: false, player: null},
-								{id: 'square15', used: false, player: null},
-								{id: 'square16', used: false, player: null},
-								{id: 'square17', used: false, player: null},
-								{id: 'square18', used: false, player: null},
-								{id: 'square19', used: false, player: null},
-								{id: 'square20', used: false, player: null},
-								{id: 'square21', used: false, player: null},
-								{id: 'square22', used: false, player: null},
-								{id: 'square23', used: false, player: null},
-								{id: 'square24', used: false, player: null},
-								{id: 'square25', used: false, player: null}
-							];
+			function getSquares() {
+				var ref = new Firebase("https://larry-firebase.firebaseio.com/gamegrid/squares");
+				var squares = $firebaseArray(ref);
+				return squares;
+			};
 
+			function getGame() {
+				var ref = new Firebase("https://larry-firebase.firebaseio.com/gamegrid/tictactoe");
+				var game = $firebaseObject(ref);
+				return game;
+			};
 
 			self.click = function($index) {
 				var square = self.squares[$index];				// create square variable using $index to select it
 				if (square.used) return;  								// check if the square is used, if true...exit function
 				square.used = true;  											// when square is clicked, change used property to true, and set player property to 'x' or 'o'
 
-				if (self.tracker.p1turn) {								// if player 1's turn is true
+				if (self.tictactoe.p1turn) {							// if player 1's turn is true
 					square.player = 'X';										// set square's player property to 'X' -> bind to html
 					self.elements.splice($index, 1, 'X');		// remove null from square's index and insert 'X'
-					self.tracker.p1turn = false;						// set player 1 turn to false
-					self.tracker.p2turn = true;							// set player 2 turn to true
+					self.tictactoe.p1turn = false;
+					self.tictactoe.p2turn = true;
 				}
 
-				else if (self.tracker.p2turn) {						// if player 2's turn is true
-					square.player = 'O';										// set square's player property to 'O' -> bind to html
-					self.elements.splice($index, 1, 'O');		// remove null from square's index and insert 'O'
-					self.tracker.p2turn = false;						// set player 2 turn to false
-					self.tracker.p1turn = true;							// set player 1 turn to true
+				else if (self.tictactoe.p2turn) {						// if player 2's turn is true
+					square.player = 'O';											// set square's player property to 'O' -> bind to html
+					self.elements.splice($index, 1, 'O');			// remove null from square's index and insert 'O'
+					self.tictactoe.p2turn = false;
+					self.tictactoe.p1turn = true;
 				}
-
-				self.counter++;  													// increment counter on each click, if counter == 9, then it's a tie game
+				self.squares.$save(square);
+				self.tictactoe.$save();
+				self.tictactoe.counter++;  								// increment counter on each click, if counter == 9, then it's a tie game
 				tracker();																// call tracker function on each click to update grid on each click
 				getWinner();															// call getWinner function on each click to check for winner on each click
 			}
@@ -128,26 +101,21 @@
 				var newGrid = [];																			// initialize local empty array that will act as the updated grid
 				var combos = [];																			// initialize empty array to house all the different combinations
 
-				for (var i = 0; i < self.select.length; i++) {				// loop through all grid sizes (3 total)
-					if (self.select[i].active === true) {								// make sure to only select active grid
-						if (self.select[i].id === '3x3 Grid') {						// identify grid id: '3x3 Grid' 
-							while(elementsCopy.length - 16) {								// Acts as a counter for 3x3 Grid, intial value is 9
-								newGrid.push(elementsCopy.splice(0,3));				// remove 3 elements at a time which decreases count at same rate
-							}																								// and pushes 3 elements at a time into newGrid, while loop exits when count hits zero
-						}
-						else if (self.select[i].id === '4x4 Grid') {			// identify grid id: '4x4 Grid'
-							while(elementsCopy.length - 9) {								// Acts as a counter for 4x4 Grid, intial value is 16
-								newGrid.push(elementsCopy.splice(0,4));				// remove 4 elements at a time which decreases count at same rate
-							}																								// and pushes 4 elements at a time into newGrid, while loop exits when count hits zero
-						}
-						else if (self.select[i].id === '5x5 Grid') {			// identify grid id: '5x5 Grid'
-							while(elementsCopy.length) {										// acts as a counter for 5x5 Grid, initial value is 25
-								newGrid.push(elementsCopy.splice(0,5));				// and pushes 5 elements at a time into newGrid, while loop exits when count hits zero
-							}
-						}						
+				if (self.tictactoe.gridx3) {
+			  	while (elementsCopy.length - 16) {
+			  		newGrid.push(elementsCopy.splice(0,3));
+			  	}
+				}
+				else if (self.tictactoe.gridx4) {
+					while (elementsCopy.length - 9) {
+						newGrid.push(elementsCopy.splice(0,4));
 					}
-
-				};
+				}
+				else if (self.tictactoe.gridx5) {
+					while (elementsCopy.length) {
+						newGrid.push(elementsCopy.splice(0,5));
+					}
+				}
 
 				// Push all rows into combos array -  >>>>>>>>>>>  WORKING!!! DO NOT DELETE THIS CODE BLOCK
 				for (var i = 0; i < newGrid.length; i++) {
@@ -203,30 +171,31 @@
 
 				// Loop through combinations to check if O or X won and set winMsg accordingly
 				for (var i = 0; i < combos.length; i++) {
-					if (self.gridSize == 9) {
+					if (self.tictactoe.gridSize == 9) {
 						if (combos[i] === 'XXX') {
-							self.tracker.winner = 1;
+							self.tictactoe.winner = 1;
 						}
 						else if (combos[i] === 'OOO') {
-							self.tracker.winner = 2;
+							self.tictactoe.winner = 2;
 						}
 					}
-					else if (self.gridSize == 16) {
+					else if (self.tictactoe.gridSize == 16) {
 						if (combos[i] === 'XXXX') {
-							self.tracker.winner = 1;
+							self.tictactoe.winner = 1;
 						}
 						else if (combos[i] === 'OOOO') {
-							self.tracker.winner = 2;
+							self.tictactoe.winner = 2;
 						}
 					}
-					else if (self.gridSize == 25) {
+					else if (self.tictactoe.gridSize == 25) {
 						if (combos[i] === 'XXXXX') {
-							self.tracker.winner = 1;
+							self.tictactoe.winner = 1;
 						}
 						else if (combos[i] === 'OOOOO') {
-							self.tracker.winner = 2;
+							self.tictactoe.winner = 2;
 						}
 					}
+					self.tictactoe.$save();
 				};				
 			
 			};
@@ -261,45 +230,48 @@
 			// Create function to check winner. If there is a winner, reset the grid
 			function getWinner() {
 
-				if (self.tracker.winner == 1) {				// if player 1 wins...
-					self.tracker.p1score++;							// increment score for player 1
-					self.tracker.p1wins = true;					// set p1wins to true to display Player 1 Wins in div with ng-class
-					$timeout(clearGrid, 1000);					// clear grid after 1 second
+				if (self.tictactoe.winner == 1) {						// if player 1 wins...
+					self.tictactoe.p1score++;									// increment score for player 1
+					self.tictactoe.p1wins = true;							// set p1wins to true to display Player 1 Wins in div with ng-class
+					$timeout(self.clearGrid, 1000);						// clear grid after 1 second
 				}
 
-				else if (self.tracker.winner == 2) {	// if player 2 wins...
-					self.tracker.p2score++;							// increment score for player 2
-					self.tracker.p2wins = true;					// set p2wins to true to display Player 2 Wins in div with ng-class
-					$timeout(clearGrid, 1000);					// clear grid after 1 second
+				else if (self.tictactoe.winner == 2) {			// if player 2 wins...
+					self.tictactoe.p2score++;									// increment score for player 2
+					self.tictactoe.p2wins = true;							// set p2wins to true to display Player 2 Wins in div with ng-class
+					$timeout(self.clearGrid, 1000);						// clear grid after 1 second
 				}
 
-				else if (self.tracker.winner === null && self.gridSize == 9 && self.counter == 9) {
-					self.tracker.tie = true;
-					$timeout(clearGrid, 1000);
+				else if (self.tictactoe.winner === false && self.tictactoe.gridSize == 9 && self.tictactoe.counter == 9) {
+					self.tictactoe.tie = true;
+					$timeout(self.clearGrid, 1000);
 				}
-				else if (self.tracker.winner === null && self.gridSize == 16 && self.counter == 16) {
-					self.tracker.tie = true;
-					$timeout(clearGrid, 1000);
+				else if (self.tictactoe.winner === false && self.tictactoe.gridSize == 16 && self.tictactoe.counter == 16) {
+					self.tictactoe.tie = true;
+					$timeout(self.clearGrid, 1000);
 				}
-				else if (self.tracker.winner === null && self.gridSize == 25 && self.counter == 25) {
-					self.tracker.tie = true;
-					$timeout(clearGrid, 1000);
+				else if (self.tictactoe.winner === false && self.tictactoe.gridSize == 25 && self.tictactoe.counter == 25) {
+					self.tictactoe.tie = true;
+					$timeout(self.clearGrid, 1000);
 				}
+				self.tictactoe.$save();
 			};
 
 
 			// reset everything!!!!!!!!!!!!!!!!
-			function clearGrid() {
-				self.tracker.p1wins = null;
-				self.tracker.p2wins = null;
-				self.tracker.tie = null;
-				self.tracker.winner = null;
-				self.squares.forEach(function(square) {		// loop through each square and set player to null and used to false
-					square.player = null;
-					square.used = false;
-				});
-				self.counter = 0;
+			self.clearGrid = function() {
+				self.tictactoe.p1wins = false;
+				self.tictactoe.p2wins = false;
+				self.tictactoe.tie = false;
+				self.tictactoe.winner = false;
+				self.tictactoe.counter = 0;
+				self.tictactoe.$save();
 				self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
+				for (var i = 0; i < self.squares.length; i++) {
+					self.squares[i].player = null;
+					self.squares[i].used = false;
+					self.squares.$save(self.squares[i]);
+				}
 			};
 
 			var speed = 10;

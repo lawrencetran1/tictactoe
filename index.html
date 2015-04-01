@@ -16,15 +16,15 @@
 	<div class="tictactoe" ng-controller="GridController as grid">
 		
 		<!-- hidden divs that show when either player 1 wins, player 2 wins, or tie game -->
-		<div class="hidden result" ng-class="{visible: grid.tracker.p1wins}" id="p1wins">
+		<div class="hidden result" ng-class="{visible: grid.tictactoe.p1wins}" id="p1wins">
 			<h1>Player 1 Wins</h1>
 		</div>
 
-		<div class="hidden result" ng-class="{visible: grid.tracker.p2wins}" id="p2wins">
+		<div class="hidden result" ng-class="{visible: grid.tictactoe.p2wins}" id="p2wins">
 			<h1>Player 2 Wins</h1>
 		</div>
 
-		<div class="hidden result" ng-class="{visible: grid.tracker.tie}" id="tiegame">
+		<div class="hidden result" ng-class="{visible: grid.tictactoe.tie}" id="tiegame">
 			<h1>Tie Game</h1>
 		</div>
 
@@ -48,7 +48,7 @@
 					  
 					</ul>
 				</nav>
-
+				<button id="clear" ng-click="grid.clearGrid()">clear grid</button>
 				<div class="title">
 					<h1>Tic Tac Toe</h1>
 				</div>
@@ -74,7 +74,7 @@
 				</div> -->
 
 				<span class="score"><h4>Player 1</h4></span>
-				<span class="score" id="p1score">{{grid.tracker.p1score}}</span>
+				<span class="score" id="p1score">{{grid.tictactoe.p1score}}</span>
 
 				<div class="turtle-power-container">
 					<div class="ninja-turtle" id="rafael">
@@ -89,7 +89,7 @@
 			<!-- use ng-class to change square sizes based on which grid is selected -->
 			<!-- use ng-repeat to repeat divs and limit to number of squares based on ng-click parameter -->
 			<div class="container">
-				<div ng-class="{'square3': grid.select[0].active, 'square4': grid.select[1].active, 'square5': grid.select[2].active}" ng-repeat="square in grid.squares | limitTo: grid.gridSize" ng-click="grid.click($index)">
+				<div ng-class="{'square3': grid.tictactoe.gridx3, 'square4': grid.tictactoe.gridx4, 'square5': grid.tictactoe.gridx5}" ng-repeat="square in grid.squares | limitTo: grid.tictactoe.gridSize" ng-click="grid.click($index)">
 					<div class="playermove">{{square.player}}</div>
 				</div>
 
@@ -109,7 +109,7 @@
 				</div> -->
 
 				<span class="score"><h4>Player 2</h4></span>
-				<span class="score" id="p2score">{{grid.tracker.p2score}}</span>
+				<span class="score" id="p2score">{{grid.tictactoe.p2score}}</span>
 
 				<div class="turtle-power-container">
 					<div class="ninja-turtle" id="mike">
