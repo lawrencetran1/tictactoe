@@ -274,6 +274,13 @@
 				}
 			};
 
+			// reset scores
+			self.clearScore = function() {
+				self.tictactoe.p1score = 0;
+				self.tictactoe.p2score = 0;
+				self.tictactoe.$save();
+			}
+
 			var speed = 10;
   		var topCount = 0;
   		var leftCount = 0;
