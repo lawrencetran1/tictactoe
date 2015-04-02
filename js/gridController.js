@@ -282,74 +282,104 @@
 			}
 
 			var speed = 10;
-  		var topCount = 0;
-  		// var leftCount = 0;
+  		var topDon = 0;
+  		var topRaf = 0;
+  		var fireCount1 = 40;
+  		var fireCount2 = 40;
 			var don = document.getElementById('don');
-			// function moveRight() {
-			// 	leftCount += speed;
-			// 	// animate();
-			// 	// Stop at right border
-			// 	if (leftCount > 260) {
-			// 		leftCount = 260;
-			// 	}
-			// 	else {
-			// 		don.style.left = leftCount + 'px';
-			// 	}
-			// };
-
-			function moveDown() {
-				topCount += speed;
-				// animate();
-
-				// Stop at bottom border
-				if (topCount > 190) {
-					topCount = 190;
+			var rafael = document.getElementById('rafael');
+			var bullet1 = document.createElement('div');
+			var bullet2 = document.createElement('div');
+  		bullet1.className = 'bullet1';
+  		bullet2.className = 'bullet2';
+			function moveDonDown() {
+				topDon += speed;
+				if (topDon > 190) {
+					topDon = 190;
 				}
 				else {
-					don.style.top = topCount + 'px';
+					don.style.top = topDon + 'px';
 				}
 			};
 
-			// function moveLeft() {
-			// 	leftCount -= speed;
-			// 	// animate();
-
-			// 	// Stop at left border
-			// 	if (leftCount < 0) {
-			// 		leftCount = 0;
-			// 	}
-			// 	else {
-			// 		don.style.left = leftCount + 'px';
-			// 	}
-			// };
-
-			function moveUp() {
-				topCount -= speed;
-				// animate();
-
-				// Stop at top border
-				if (topCount < 0) {
-					topCount = 0;
+			function moveDonUp() {
+				topDon -= speed;
+				if (topDon < 0) {
+					topDon = 0;
 				}
 				else {
-					don.style.top = topCount + 'px';
+					don.style.top = topDon + 'px';
 				}
 			};
+			function moveRafDown() {
+				topRaf += speed;
+				if (topRaf > 190) {
+					topRaf = 190;
+				}
+				else {
+					rafael.style.top = topRaf + 'px';
+				}
+			};
+
+			function moveRafUp() {
+				topRaf -= speed;
+				if (topRaf < 0) {
+					topRaf = 0;
+				}
+				else {
+					rafael.style.top = topRaf + 'px';
+				}
+			};
+
+			function shootRaf() {
+				rafael.appendChild(bullet1);
+				// rafael.style.background = 'url(shoot.gif)';
+				// rafael.style.width = '61px';
+				bullet1.style.display = 'block';
+				fireCount1 += 60;
+				bullet1.style.marginLeft = fireCount1 + 'px';
+				if (fireCount1 > 775) {fireCount1 = 40}
+			};
+
+			function shootDon() {
+				don.appendChild(bullet2);
+				// rafael.style.background = 'url(shoot.gif)';
+				// rafael.style.width = '61px';
+				bullet2.style.display = 'block';
+				fireCount2 -= 60;
+				bullet2.style.marginLeft = fireCount2 + 'px';
+				if (fireCount2 < -740 ) {fireCount2 = 40}
+			};	
 
 			document.onkeydown = function(event) {
+				if (event.keyCode == 40) {moveDonDown();}
+				else if (event.keyCode == 38) {moveDonUp();}
+				else if (event.keyCode == 83) {moveRafDown();}
+				else if (event.keyCode == 87) {moveRafUp();}
+				// Shoot continuous fireball
+				else if (event.keyCode == 68) {shootRaf();}
+				else if (event.keyCode == 37) {shootDon();}
+			};
 
-			// Move right
-			// if (event.keyCode === 39) {moveRight();}
-			// Move down
-			if (event.keyCode === 40) {moveDown();}
-			// Move left
-			// else if (event.keyCode === 37) {moveLeft();}
-			// Move up
-			else if (event.keyCode === 38) {moveUp();}
-			// Shoot continuous fireball
-			// else if (event.keyCode === 32) {shoot();}
-			};			
+			// document.onkeypress = function(event) {
+			// 	// console.log(event);
+			// 	rafael.appendChild(bullet1);
+			// 	bullet1.style.display = 'block';
+			// 	if (event.keyCode == 100) {
+			// 		for (var i = 0; i < 100; i++) {
+			// 			bullet1.style.marginLeft = fireCount1 + i + 'px';
+			// 		}
+			// 	}
+			// };	
 
+			document.onkeyup = function(event) {
+		    bullet1.style.display = 'none';
+		    bullet2.style.display = 'none';
+		    bullet1.style.marginLeft = 70 + 'px';
+		    bullet2.style.marginRight = 70 + 'px';
+		    fireCount1 = 40;
+		    fireCount2 = 40;
+			};
 
 		};
 
