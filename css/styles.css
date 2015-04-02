@@ -334,17 +334,23 @@ h4 {
 }
 
 .bullet1 {
+	position: absolute;
 	height: 10px;
 	width: 10px;
 	background-color: black;
 	margin-left: 70px;
+	margin-top: 16px;
+	border-radius: 50px;
 }
 
 .bullet2 {
+	position: absolute;
 	height: 10px;
 	width: 10px;
 	background-color: black;
 	margin-right: 70px;
+	margin-top: 16px;
+	border-radius: 50px;
 }
 
 .playermove {

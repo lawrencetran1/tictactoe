@@ -303,6 +303,7 @@
 			};
 
 			function moveDonUp() {
+				console.log(rafael.offsetTop);
 				topDon -= speed;
 				if (topDon < 0) {
 					topDon = 0;
@@ -312,6 +313,7 @@
 				}
 			};
 			function moveRafDown() {
+				console.log(rafael.offsetTop);
 				topRaf += speed;
 				if (topRaf > 190) {
 					topRaf = 190;
@@ -352,33 +354,40 @@
 			};	
 
 			document.onkeydown = function(event) {
-				if (event.keyCode == 40) {moveDonDown();}
-				else if (event.keyCode == 38) {moveDonUp();}
-				else if (event.keyCode == 83) {moveRafDown();}
-				else if (event.keyCode == 87) {moveRafUp();}
-				// Shoot continuous fireball
-				else if (event.keyCode == 68) {shootRaf();}
-				else if (event.keyCode == 37) {shootDon();}
+				if (event.keyCode == 40) {
+					moveDonDown();
+					console.log(rafael.offsetLeft, rafael.offsetTop, bullet2.offsetLeft, bullet2.offsetTop);
+				}
+				else if (event.keyCode == 38) {
+					moveDonUp();
+					console.log(rafael.offsetLeft, rafael.offsetTop, bullet2.offsetLeft, bullet2.offsetTop);
+				}
+				else if (event.keyCode == 83) {
+					moveRafDown();
+					console.log(rafael.offsetLeft, rafael.offsetTop, bullet2.offsetLeft, bullet2.offsetTop);
+				}
+				else if (event.keyCode == 87) {
+					moveRafUp();
+					console.log(rafael.offsetLeft, rafael.offsetTop, bullet2.offsetLeft, bullet2.offsetTop);
+				}
+				else if (event.keyCode == 68) {
+					shootRaf();
+					console.log(rafael.offsetLeft, rafael.offsetTop, bullet2.offsetLeft, bullet2.offsetTop);
+				}
+				else if (event.keyCode == 37) {
+					shootDon();
+					console.log(rafael.offsetLeft, rafael.offsetTop, bullet2.offsetLeft, bullet2.offsetTop);
+					if (bullet2.offsetLeft == -740) {console.log('ok')}
+				}
 			};
 
-			// document.onkeypress = function(event) {
-			// 	// console.log(event);
-			// 	rafael.appendChild(bullet1);
-			// 	bullet1.style.display = 'block';
-			// 	if (event.keyCode == 100) {
-			// 		for (var i = 0; i < 100; i++) {
-			// 			bullet1.style.marginLeft = fireCount1 + i + 'px';
-			// 		}
-			// 	}
-			// };	
-
 			document.onkeyup = function(event) {
-		    bullet1.style.display = 'none';
-		    bullet2.style.display = 'none';
-		    bullet1.style.marginLeft = 70 + 'px';
-		    bullet2.style.marginRight = 70 + 'px';
-		    fireCount1 = 40;
-		    fireCount2 = 40;
+		    // bullet1.style.display = 'none';
+		    // bullet2.style.display = 'none';
+		    // bullet1.style.marginLeft = 70 + 'px';
+		    // bullet2.style.marginRight = 70 + 'px';
+		    // fireCount1 = 40;
+		    // fireCount2 = 40;
 			};
 
 		};

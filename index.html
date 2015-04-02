@@ -75,7 +75,7 @@
 				</div>
 
 				<span class="score"><h4>Player 1</h4></span>
-				<span class="score" id="p1score">{{grid.tictactoe.p1score}}</span>
+				<span class="score" id="p1score" ng-bind="grid.tictactoe.p1score"></span>
 
 				<div class="turtle-power-container">
 					<div class="ninja-turtle" id="rafael">
@@ -91,7 +91,7 @@
 			<!-- use ng-repeat to repeat divs and limit to number of squares based on ng-click parameter -->
 			<div class="container">
 				<div ng-class="{'square3': grid.tictactoe.gridx3, 'square4': grid.tictactoe.gridx4, 'square5': grid.tictactoe.gridx5}" ng-repeat="square in grid.squares | limitTo: grid.tictactoe.gridSize" ng-click="grid.click($index)">
-					<div class="playermove">{{square.player}}</div>
+					<div class="playermove" ng-bind="square.player"></div>
 				</div>
 
 			</div>
@@ -110,7 +110,7 @@
 				</div>
 
 				<span class="score"><h4>Player 2</h4></span>
-				<span class="score" id="p2score">{{grid.tictactoe.p2score}}</span>
+				<span class="score" id="p2score" ng-bind="grid.tictactoe.p2score"></span>
 
 				<div class="turtle-power-container">
 					<div class="ninja-turtle" id="don">
