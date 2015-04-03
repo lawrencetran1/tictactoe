@@ -1,5 +1,5 @@
+// bug: if idle then getWinner doesn't run correctly
 // add draw line through winning combination
-// add paper scissor rock to see who goes first
 // add ninja animation
 // change bamboo grid to japanese window grid
 // add chat
@@ -7,7 +7,7 @@
 // fix checkbox
 // add bombs ~ 33% chance of hitting one, lose turn when stepping on a bomb
 // limit ng-repeat to self.select.count -> should change grid accordingly
-
+// when controller loads it prompts for username, store username in firebase to track who's turn it isTrusted
 
 
 // IIFE
@@ -20,11 +20,79 @@
 		GridController.$inject = ['$firebaseArray', '$firebaseObject', '$timeout'];		
 
 		function GridController($firebaseArray, $firebaseObject, $timeout) {  				// pass $timeout service in order to delay clearGrid function
-
+			// var choice = prompt("Do you want to be X or O?");
+			var GAME_LOCATION = 'https://larry-firebase.firebaseio.com/gamegrid';
 			var self = this;													// capture variable
-
 			self.squares = getSquares();							// retrieve array of squares from firebase
 			self.tictactoe = getGame();								// retrieve tictactoe object from firebase
+			// self.player = getPlayer();
+			self.id = null;
+			// initalize elements array to insert move in proper index
+			self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
+			self.tictactoe.counter = 0;		// when counter hits 9 and there is no winner, then it is a tie game
+
+			function getSquares() {
+				var ref = new Firebase(GAME_LOCATION + '/squares');
+				var squares = $firebaseArray(ref);
+				return squares;
+			};
+
+			function getGame() {
+				var ref = new Firebase(GAME_LOCATION + '/tictactoe');
+				var game = $firebaseObject(ref);
+				return game;
+			};
+
+			(function(){
+				var gameRef = new Firebase('https://larry-firebase.firebaseio.com/gamegrid');
+				console.log('test')
+				gameRef.once("value", function(snapshot) {
+					if (typeof(snapshot.val().player1)==="undefined") {
+						var player1 = new Player('Player 1', 'X', 0, false, false);
+						var player1Ref = gameRef.child('player1');
+						player1Ref.update(player1);
+						self.id = 'X';
+					}
+					else if (typeof(snapshot.val().player1)==="object" && typeof(snapshot.val().player2)==="undefined" && self.id===null) {
+						var player2 = new Player('Player 2', 'O', 0, false, false);
+						var player2Ref = gameRef.child('player2');
+						player2Ref.update(player2);
+						self.id = 'O';
+					}
+				});
+			})();
+
+			function Player(name, piece, score, turn, won) {
+				this.name = name;
+				this.piece = piece;
+				this.score = score;
+				this.turn = turn;
+				this.won = won;
+			}
+
+			self.click = function($index) {
+				var square = self.squares[$index];				// create square variable using $index to select it
+				if (!square.player) {
+					if (self.tictactoe.p1turn === true) {							  // if player 1's turn is true
+						square.player = 'X';																							// set square's player property to 'X' -> bind to html
+						self.elements.splice($index, 1, 'X');															// remove null from square's index and insert 'X'
+						self.tictactoe.p1turn = false;
+						self.tictactoe.p2turn = true;
+					}
+					else if (self.tictactoe.p2turn === true) {					// if player 2's turn is true
+						square.player = 'O';																							// set square's player property to 'O' -> bind to html
+						self.elements.splice($index, 1, 'O');															// remove null from square's index and insert 'O'
+						self.tictactoe.p2turn = false;
+						self.tictactoe.p1turn = true;
+					}
+					self.squares.$save(square);
+					self.tictactoe.$save(self.elements);
+					self.tictactoe.$save();
+					self.tictactoe.counter++;  								// increment counter on each click, if counter == 9, then it's a tie game
+					tracker();																// call tracker function on each click to update grid on each click
+					getWinner();															// call getWinner function on each click to check for winner on each click
+				}
+			};
 
 			self.changeGrid = function(num) {					// use parameter passed from ng-click
 				self.clearGrid();												// clear grid each time grid is changed			
@@ -49,47 +117,6 @@
 				}
 				self.tictactoe.$save()
 			};
-
-			// initalize elements array to insert move in proper index
-			self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
-			self.tictactoe.counter = 0;		// when counter hits 9 and there is no winner, then it is a tie game
-
-			function getSquares() {
-				var ref = new Firebase("https://larry-firebase.firebaseio.com/gamegrid/squares");
-				var squares = $firebaseArray(ref);
-				return squares;
-			};
-
-			function getGame() {
-				var ref = new Firebase("https://larry-firebase.firebaseio.com/gamegrid/tictactoe");
-				var game = $firebaseObject(ref);
-				return game;
-			};
-
-			self.click = function($index) {
-				var square = self.squares[$index];				// create square variable using $index to select it
-				if (square.used) return;  								// check if the square is used, if true...exit function
-				square.used = true;  											// when square is clicked, change used property to true, and set player property to 'x' or 'o'
-
-				if (self.tictactoe.p1turn) {							// if player 1's turn is true
-					square.player = 'X';										// set square's player property to 'X' -> bind to html
-					self.elements.splice($index, 1, 'X');		// remove null from square's index and insert 'X'
-					self.tictactoe.p1turn = false;
-					self.tictactoe.p2turn = true;
-				}
-
-				else if (self.tictactoe.p2turn) {						// if player 2's turn is true
-					square.player = 'O';											// set square's player property to 'O' -> bind to html
-					self.elements.splice($index, 1, 'O');			// remove null from square's index and insert 'O'
-					self.tictactoe.p2turn = false;
-					self.tictactoe.p1turn = true;
-				}
-				self.squares.$save(square);
-				self.tictactoe.$save();
-				self.tictactoe.counter++;  								// increment counter on each click, if counter == 9, then it's a tie game
-				tracker();																// call tracker function on each click to update grid on each click
-				getWinner();															// call getWinner function on each click to check for winner on each click
-			}
 
 			// Create function that shows current state of the grid when click() is called
 			function tracker() {
