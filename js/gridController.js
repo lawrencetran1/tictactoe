@@ -25,7 +25,6 @@
 			var self = this;													// capture variable
 			self.squares = getSquares();							// retrieve array of squares from firebase
 			self.tictactoe = getGame();								// retrieve tictactoe object from firebase
-			// self.player = getPlayer();
 			self.id = null;
 			// initalize elements array to insert move in proper index
 			self.elements = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']; 
@@ -73,13 +72,13 @@
 			self.click = function($index) {
 				var square = self.squares[$index];				// create square variable using $index to select it
 				if (!square.player) {
-					if (self.tictactoe.p1turn === true) {							  // if player 1's turn is true
+					if (self.tictactoe.p1turn === true && self.id === 'X') {							  // if player 1's turn is true
 						square.player = 'X';																							// set square's player property to 'X' -> bind to html
 						self.elements.splice($index, 1, 'X');															// remove null from square's index and insert 'X'
 						self.tictactoe.p1turn = false;
 						self.tictactoe.p2turn = true;
 					}
-					else if (self.tictactoe.p2turn === true) {					// if player 2's turn is true
+					else if (self.tictactoe.p2turn === true && self.id === 'O') {					// if player 2's turn is true
 						square.player = 'O';																							// set square's player property to 'O' -> bind to html
 						self.elements.splice($index, 1, 'O');															// remove null from square's index and insert 'O'
 						self.tictactoe.p2turn = false;
